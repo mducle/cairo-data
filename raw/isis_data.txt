@@ -1,0 +1,20 @@
+ISIS raw data files are available to download from:
+
+https://doi.org/10.5286/ISIS.E.RB1820598
+
+Please click on the links and download the following files if you want to re-run the reduction:
+
+MAP30331.nxs
+MAP30473.nxs
+MAP30475.nxs
+MAP30476.nxs
+MAP30477.nxs
+MAR25779.nxs
+MAR25968.nxs
+MAR26014.nxs
+MAR26015.nxs
+MER40874.nxs
+MER40875.nxs
+MER40876.nxs
+MER40877.nxs
+MER40878.nxs
