@@ -2,7 +2,11 @@
 # print must now be used as a function, e.g print('Hello','World')
 from __future__ import (absolute_import, division, print_function, unicode_literals)
 
+import scipy
+import numpy as np
+
 import mslice.cli as m
+import matplotlib
 import matplotlib.pyplot as plt
 import mslice.plotting.pyplot as mplt
 from mslice.models.workspacemanager.workspace_provider import add_workspace, get_visible_workspace_names
@@ -48,7 +52,7 @@ for sts in [['1p7', ['0p74', '1p11', '2p22']],
 print(wsd.keys())
 
 if True:#'mar_5K_Ei160_scaled' not in loadedws:
-    wsd['mar_5K_Ei160_scaled'] = m.Scale(wsd['mar_5K_Ei160'], 0.0001, OutputWorkspace='MAR25968_Ei160.00meV_scaled')
+    wsd['mar_5K_Ei160_scaled'] = m.Scale(wsd['mar_5K_Ei160'], 0.0002, OutputWorkspace='MAR25968_Ei160.00meV_scaled')
 else:
     wsd['mar_5K_Ei160_scaled'] = m.get_workspace_handle('MAR25968_Ei160.00meV_scaled')
 if 'mar_5K_Ei66_scaled' not in loadedws:
@@ -56,7 +60,7 @@ if 'mar_5K_Ei66_scaled' not in loadedws:
 else:
     wsd['mar_5K_Ei66_scaled'] = m.get_workspace_handle('MAR25968_Ei66.00meV_scaled')
 if 'mar_5K_Ei16_scaled' not in loadedws:
-    wsd['mar_5K_Ei16_scaled'] = m.Scale(wsd['mar_5K_Ei16'], 0.00025, OutputWorkspace='MAR26014_Ei16.00meV_scaled')
+    wsd['mar_5K_Ei16_scaled'] = m.Scale(wsd['mar_5K_Ei16'], 0.0002, OutputWorkspace='MAR26014_Ei16.00meV_scaled')
 else:
     wsd['mar_5K_Ei16_scaled'] = m.get_workspace_handle('MAR26014_Ei16.00meV_scaled')
 
@@ -96,7 +100,7 @@ ax2r2[0].set_xlim(0, 5)
 
 ct3 = m.Cut(wsd['in4_2K_Ei16'], 'DeltaE,-5,13,0.05', '|Q|,1,1.5,0')
 ct3x = ct3.get_coordinates()
-ct3x = ct3x[ct3x.keys()[0]]
+ct3x = ct3x[list(ct3x.keys())[0]]
 ax2r1[1].errorbar(ct3.get_signal(), ct3x, xerr=ct3.get_error(), marker='.', ls='-')
 ax2r1[1].set_xlim(0, 0.025)
 ax2r1[1].set_ylim(-2, 11)
@@ -106,7 +110,7 @@ ct4 = [m.Cut(wsd['mar_5K_Ei160_scaled'], 'DeltaE,-40,120,1', '|Q|,1,4,0'),
 lb4 = ['E$_i$=160 meV', 'E$_i$=66 meV']
 for ct in ct4:
     ctx = ct.get_coordinates()
-    ctx = ctx[ctx.keys()[0]]
+    ctx = ctx[list(ctx.keys())[0]]
     ax2r2[1].errorbar(ct.get_signal(), ctx, xerr=ct.get_error(), marker='.', ls='-')
 ax2r2[1].set_xlim(0, 0.005)
 ax2r2[1].set_ylim(-40, 80)
@@ -136,7 +140,7 @@ ax3r2[0].set_xlim(-2, 11)
 
 for ct in ct4:
     ctx = ct.get_coordinates()
-    ctx = ctx[ctx.keys()[0]]
+    ctx = ctx[list(ctx.keys())[0]]
     ax3r2[1].errorbar(ctx, ct.get_signal(), ct.get_error(), marker='.', ls='-')
 ax3r2[1].set_ylim(0, 0.005)
 ax3r2[1].set_xlim(-40, 100)
@@ -160,3 +164,96 @@ for id, tt in enumerate([2, 40, 65, 80]):
 ax.set_ylim(0, 0.03)
 
 plt.show()
+
+###################################################################################
+
+sls_mar = []
+for ei, estp in zip([160, 66], [0.4, 0.2]):
+    sls_mar.append(m.Slice(wsd['mar_5K_Ei%d_scaled' % (ei)], '|Q|', 'DeltaE,{},{},{}'.format(-10, ei*0.7, estp)))
+sls_in4 = []
+for ei, estp in zip([66, 16], [0.2, 0.05]):
+    sls_in4.append(m.Slice(wsd['in4_2K_Ei%d' % (ei)], '|Q|', 'DeltaE,{},{},{}'.format(-10, ei*0.7, estp)))
+spinw_calc = scipy.io.loadmat(parent_dir + '/calculations/bfof_powspec.mat')
+cmp = matplotlib.cm.get_cmap('cividis').reversed()
+
+fig5, (ax1, ax2, ax3) = plt.subplots(ncols=3, subplot_kw={'projection': 'mslice'})
+for sl in sls_in4:
+    ax1.pcolormesh(sl, vmin=0., vmax=0.007, cmap=cmp)
+ax1.set_xlim(0, 5)
+ax1.set_ylim(0, 100)
+ax1.set_title('IN4 Data')
+
+for sl in sls_mar:
+    ax2.pcolormesh(sl, vmin=0., vmax=0.007, cmap=cmp)
+ax2.set_xlim(0, 5)
+ax2.set_ylim(0, 100)
+ax2.set_ylabel('')
+ax2.set_title('MARI Data')
+hkl = [op(spinw_calc['hklA']) for op in [np.min, np.max, lambda x: np.mean(np.diff(x))/2., np.shape]]
+hkl = np.linspace(hkl[0]-hkl[2], hkl[1]+hkl[2], hkl[3][1]+1)
+ax3.pcolormesh(hkl, np.squeeze(spinw_calc['Evect']), spinw_calc['swConv'], vmin=0, vmax=0.3, cmap=cmp)
+ax3.set_xlim(0, 5)
+ax3.set_xlabel('$|Q| (\mathrm{\AA}^{-1})$')
+ax3.set_title('SpinW calc.')
+plt.show()
+
+###################################################################################
+
+cc = plt.rcParams['axes.prop_cycle'].by_key()['color']
+
+fig6 = plt.figure()
+ax1 = fig6.add_subplot(111, projection='mslice')
+ax2 = fig6.add_axes([0.45, 0.5, 0.42, 0.35], projection='mslice')
+
+ax1.errorbar(m.Cut(wsd['mar_5K_Ei160_scaled'], 'DeltaE,-40,120,1', '|Q|,1,4,0'), label='MARI Ei=160 meV', marker='o', ls='')
+ax1.errorbar(m.Cut(wsd['mar_5K_Ei66_scaled'], 'DeltaE,-15,60,0.5', '|Q|,2,2.5,0'), label='MARI Ei=66 meV', marker='s', ls='')
+ax2.errorbar(m.Cut(wsd['in4_2K_Ei16'], 'DeltaE,-5,13,0.1', '|Q|,1,1.5,0'), label='IN4 $\lambda=2.2 \mathrm{\AA}$', marker='^', ls='', color=cc[2])
+h1, l1 = ax1.get_legend_handles_labels()
+h2, l2 = ax2.get_legend_handles_labels()
+
+spinw_cuts = scipy.io.loadmat(parent_dir + '/calculations/bfof_powcut.mat')
+axs = [ax1, ax1, ax2]
+scale_fac = [2. / 100, 1. / 100, 2. / 66]
+bkg0 = [0.0 / 100., 0., 0.005 / 66.]
+for (ii, sw_cut) in enumerate(spinw_cuts['bfof_powcuts'][0,:]):
+    xx = sw_cut[0,0].T
+    yy = (sw_cut[0,1]*scale_fac[ii]).T
+    bkg = (sw_cut[0,2]*scale_fac[ii]).T
+    #print(bkg[np.where(~np.isnan(bkg))])
+    bkg[np.where(np.isnan(bkg))] = 0
+    axs[ii].plot(xx, yy + bkg + bkg0[ii], ls='-', color=cc[ii])
+    #axs[ii].plot(xx, yy + bkg0[ii], ls='--', color=cc[ii])
+    #axs[ii].plot(xx, bkg + bkg0[ii], ls=':', color=cc[ii])
+
+ax1.legend().remove()
+ax2.legend().remove()
+ax1.set_xlim(0, 100)
+ax1.set_ylim(0, 0.01)
+ax1.set_ylabel('Intensity (arb. unit)')
+ax2.set_xlim(0, 12)
+ax2.set_ylim(0, 0.03)
+ax2.set_ylabel('Intensity (arb. unit)')
+ax2.legend(h1+h2, l1+l2, loc='upper right')
+
+plt.show()
+
+###################################################################################
+
+#ax2 = fig6.add_subplot(122, projection='mslice')
+#fig6, (ax1, ax2) = plt.subplots(ncols=2, subplot_kw={'projection': 'mslice'})
+#ax2 = fig6.add_axes([0.3, 0.55, 0.15, 0.3], projection='mslice')
+#fig6.tight_layout()
+
+fig7 = plt.figure()
+ax = fig7.add_subplot(111, projection='mslice')
+cts = []
+mrk = ['p', '*', 'x', '+']
+for id, tt in enumerate([2, 40, 65, 80]):
+    cts.append(m.Cut(wsd['in4_{}K_Ei16'.format(tt)], 'DeltaE,-5,13,0.1', '|Q|,1,1.5,0') + 0.015*id)
+    ax.errorbar(cts[-1], marker=mrk[id], ls='', color=cc[id], label='{}K'.format(tt))
+ax.set_xlim(-4, 12)
+ax.set_ylim(0, 0.08)
+ax.set_ylabel('Intensity (arb. unit)')
+
+plt.show()
+
