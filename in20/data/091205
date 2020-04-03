@@ -1,0 +1,69 @@
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+  091205      1      0
+ILL TAS data in the new ASCII format follow after the line VV...V
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	   80      0
+IN20  ducle       04-May-15 12:57:43
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+INSTR: IN20
+EXPNO: 4-01-1428
+USER_: ducle
+LOCAL: mechthild
+FILE_: 091205
+DATE_: 04-May-15 12:57:43
+TITLE: bi2fe4o9
+COMND: BS D1L 1 DD1L 1 NP 25 TI 1
+POSQE: QH=  4.0000, QK=  0.0000, QL=  0.0000, EN=   0.0000, UN=meV
+STEPS: D1L     =  1.0733
+CURVE: MONO= auto, ANA= manu
+PARAM: DM=   3.13550, DA=   3.35500, SM=-1., SS= 1., SA=-1.
+PARAM: FX= 2., KFIX=   2.66140
+PARAM: ALF1= 600.00, ALF2= 600.00,ALF3= 600.00, ALF4= 600.00
+PARAM: BET1= 600.00, BET2= 600.00,BET3= 600.00, BET4= 600.00
+PARAM: ETAM=     0.0, ETAA=    16.0
+PARAM: AS=   7.99135, BS=   8.42968, CS=   6.00700
+PARAM: AA= 90.0000, BB= 90.0000,CC= 90.0000, ETAS=     1.0
+PARAM: AX=   1.000, AY=   0.000, AZ=   0.000
+PARAM: BX=   0.000, BY=   1.000, BZ=   0.000
+VARIA: I1      =  -0.01, I2      =  -0.01, I3      =  -0.01, I4      =  -0.01
+VARIA: I6      =   0.02, I8      =  -0.01, I9      =   0.00, I10     =   0.00
+VARIA: A1      = -22.12, A2      = -44.23, A3      = 126.21, A4      =  72.41
+VARIA: A5      = -20.60, A6      = -41.20, TM      =  58.00, GM      =   5.00
+VARIA: CH      = 225.00, DAL     =  10.00, DAR     =  10.08, DAV     = 163.00
+VARIA: RMH     =  70.16, RMSH    =  40.17, RAH     =   5.40, RAV     =   3.62
+VARIA: GL      =  -4.17, GU      =  -2.45, TL      = -26.32, TU      = -24.56
+VARIA: TA      =   6.93, GA      = -14.33, A3B     = -28.73, RMSV    =  43.13
+VARIA: D1T     =  25.28, D1B     =  26.06, D1R     =  26.47, D1L     =   0.89
+VARIA: D2T     =  30.31, D2B     =  25.00, D2R     =  21.75, D2L     =  21.76
+ZEROS: A1      =-249.57, A2      =-176.05, A3      =-173.96, A4      =-179.91
+ZEROS: A5      =-262.96, A6      =-179.20, TM      =   0.00, GM      = -50.10
+ZEROS: CH      =   0.00, DAL     =   3.10, DAR     =  -1.68, DAV     =   0.00
+ZEROS: RMH     =   0.00, RMSH    =   0.00, RAH     =   0.00, RAV     =   0.00
+ZEROS: GL      =   0.00, GU      =   0.00, TL      =  -2.80, TU      =  -0.21
+ZEROS: TA      = -65.16, GA      = -46.35, A3B     =-199.69, RMSV    =   0.00
+ZEROS: D1T     =   0.00, D1B     =   0.00, D1R     =   0.00, D1L     =   0.00
+ZEROS: D2T     =   0.00, D2B     =   0.00, D2R     =   0.00, D2L     =   0.00
+PARAM: TI=      1.00
+PARAM: TT=     10.25, RT=     10.00, TT2=      0.00, RT2=      0.00, MAG=      1.00
+FORMT: (I4,1X,F10.4,1X,2(1X,F9.0),1X,F9.2,1x,F9.0 , 2(1X,F10.4)
+DATA_:
+ PNT    D1L        M1        M2        TIME      CNTS      QH         QK     
+   1     0.8945     1611.        1.      1.00     3285.     3.9988    -0.0003
+   2     2.3256     1634.        3.      1.00     3167.     3.9988    -0.0003
+   3     3.3989     1619.        2.      1.00     3195.     3.9988    -0.0003
+   4     4.4723     1700.        5.      1.00     3323.     3.9988    -0.0003
+   5     5.1878     1588.        9.      1.00     3253.     3.9988    -0.0003
+   6     6.4401     1562.        6.      1.00     3212.     3.9988    -0.0003
+   7     7.6923     1561.        3.      1.00     3195.     3.9988    -0.0003
+   8     8.7657     1578.        6.      1.00     3230.     3.9988    -0.0003
+   9     9.8390     1667.        5.      1.00     3208.     3.9988    -0.0003
+  10    10.5546     1701.        4.      1.00     3319.     3.9988    -0.0003
+  11    11.9857     1659.        1.      1.00     3308.     3.9988    -0.0003
+  12    13.0590     1640.        6.      1.00     3404.     3.9988    -0.0003
+  13    14.1324     1632.        5.      1.00     3236.     3.9988    -0.0003
+  14    15.2057     1565.        1.      1.00     3273.     3.9988    -0.0003
+  15    16.1002     1693.        5.      1.00     3064.     3.9988    -0.0003
+  16    17.3524     1623.        3.      1.00     3231.     3.9988    -0.0003
+  17    18.4258     1613.        2.      1.00     3286.     3.9988    -0.0003
+  18    19.3202     1684.        3.      1.00     3291.     3.9988    -0.0003
+  19    20.5725     1653.        7.      1.00     3188.     3.9988    -0.0003

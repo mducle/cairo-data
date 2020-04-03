@@ -1,0 +1,55 @@
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+  091437      1      0
+ILL TAS data in the new ASCII format follow after the line VV...V
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	   80      0
+IN20  mechthild   08-May-15 13:13:09
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+INSTR: IN20
+EXPNO: 4-01-1428
+USER_: mechthild
+LOCAL: mechthild
+FILE_: 091437
+DATE_: 08-May-15 13:13:09
+TITLE: bi2fe4o9
+COMND: SC EI 14.68 DEI 0.15 NP 21 TI 5
+POSQE: QH=  2.9982, QK=  2.6479, QL= -0.0025, EN=   0.0000, UN=meV
+STEPS: EI      =  0.1500
+CURVE: MONO= auto, ANA= manu
+PARAM: DM=   3.43720, DA=   3.43720, SM=-1., SS= 1., SA=-1.
+PARAM: FX= 1., KFIX=   2.52180
+PARAM: ALF1= 600.00, ALF2= 600.00,ALF3= 600.00, ALF4= 600.00
+PARAM: BET1= 600.00, BET2= 600.00,BET3= 600.00, BET4= 600.00
+PARAM: ETAM=    16.0, ETAA=    16.0
+PARAM: AS=   1.63740, BS=   8.42968, CS=   6.00700
+PARAM: AA= 90.0000, BB= 90.0000,CC= 90.0000, ETAS=     1.0
+PARAM: AX=   1.000, AY=   0.000, AZ=   0.000
+PARAM: BX=   0.000, BY=   1.000, BZ=   0.000
+VARIA: I1      =  -0.01, I2      =   0.00, I3      =  -0.01, I4      =   6.02
+VARIA: I6      =   0.02, I8      =   5.20, I9      =   0.00, I10     =   2.78
+VARIA: A1      = -21.25, A2      = -42.50, A3      =   0.01, A4      =  41.91
+VARIA: A5      = -20.08, A6      = -40.15, TM      =   5.40, GM      =   6.05
+VARIA: CH      =  45.00, DAL     =  10.00, DAR     =  10.10, DAV     = 111.21
+VARIA: RMH     =  58.69, RMSH    =  40.15, RAH     =   3.96, RAV     =   2.84
+VARIA: GL      =  -0.04, GU      =  -0.04, TL      = -26.29, TU      = -24.56
+VARIA: TA      =  73.92, GA      =  -6.46, A3B     =   3.11, RMSV    =  43.07
+VARIA: D1T     =   0.00, D1B     =   0.00, D1R     =   0.00, D1L     =   0.00
+VARIA: D2T     =   0.00, D2B     =   0.00, D2R     =   0.00, D2L     =   0.00
+ZEROS: A1      =-249.06, A2      =-176.01, A3      =-173.96, A4      =-180.14
+ZEROS: A5      =-263.58, A6      =-180.04, TM      =   0.00, GM      = -50.10
+ZEROS: CH      =   0.00, DAL     =   3.10, DAR     =  -1.68, DAV     =   0.00
+ZEROS: RMH     =   0.00, RMSH    =   0.00, RAH     =   0.00, RAV     =   0.00
+ZEROS: GL      =   0.00, GU      =   0.00, TL      =  -2.80, TU      =  -0.21
+ZEROS: TA      = -65.16, GA      = -46.35, A3B     =-199.69, RMSV    =   0.00
+ZEROS: D1T     =   0.00, D1B     =   0.00, D1R     =   0.00, D1L     =   0.00
+ZEROS: D2T     =   0.00, D2B     =   0.00, D2R     =   0.00, D2L     =   0.00
+PARAM: IF1H=  -0.939, IF1V=  -5.200, IF2H=   1.046, IF2V=   5.200
+PARAM: HELM=   0.000
+PARAM: TI=      5.00
+PARAM: TT=      1.48, RT=      1.68, TT2=      0.00, RT2=      0.00, MAG=      1.00
+FORMT: (I4,1X,F10.4,1X,2(1X,F9.0),1X,F9.2,1x,F9.0 )
+DATA_:
+ PNT    EI         M1        M2        TIME      CNTS  
+   1    13.1769    33058.        3.      5.00        1.
+   2    13.3260    33368.        2.      5.00        5.
+   3    13.4718    33525.        0.      5.00        5.

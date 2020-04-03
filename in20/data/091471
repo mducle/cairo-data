@@ -1,0 +1,74 @@
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+  091471      1      0
+ILL TAS data in the new ASCII format follow after the line VV...V
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	   80      0
+IN20  ducle       10-May-15 22:09:03
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+INSTR: IN20
+EXPNO: 4-01-1428
+USER_: ducle
+LOCAL: mechthild
+FILE_: 091471
+DATE_: 10-May-15 22:09:03
+TITLE: bi2fe4o9
+COMND: BS QH 3.5 3.5 0 40    DQH 0 0 0 0 NP 1
+POSQE: QH=  3.5000, QK=  3.5000, QL=  0.0000, EN=  40.0000, UN=meV
+STEPS: QH      =  0.0000, QK      =  0.0000, QL      =  0.0000
+STEPS: EN      =  0.0000
+CURVE: MONO= auto, ANA= manu
+PARAM: DM=   3.43720, DA=   3.43720, SM=-1., SS= 1., SA=-1.
+PARAM: FX= 2., KFIX=   2.66214
+PARAM: ALF1= 600.00, ALF2= 600.00,ALF3= 600.00, ALF4= 600.00
+PARAM: BET1= 600.00, BET2= 600.00,BET3= 600.00, BET4= 600.00
+PARAM: ETAM=    16.0, ETAA=    16.0
+PARAM: AS=   7.99135, BS=   8.42968, CS=   6.00700
+PARAM: AA= 90.0000, BB= 90.0000,CC= 90.0000, ETAS=     1.0
+PARAM: AX=   1.000, AY=   0.000, AZ=   0.000
+PARAM: BX=   0.000, BY=   1.000, BZ=   0.000
+VARIA: I1      =  -0.01, I2      =   0.00, I3      =  -0.01, I4      =   6.02
+VARIA: I6      =   0.02, I8      =   5.20, I9      =   0.00, I10     =   2.78
+VARIA: A1      = -10.24, A2      = -20.51, A3      = 106.35, A4      =  45.71
+VARIA: A5      = -20.09, A6      = -40.16, TM      =   5.30, GM      =   6.04
+VARIA: CH      =  45.00, DAL     =  10.00, DAR     =  10.10, DAV     = 111.21
+VARIA: RMH     =  95.60, RMSH    =  40.15, RAH     =   3.97, RAV     =   2.84
+VARIA: GL      =   0.04, GU      =  -0.03, TL      = -26.31, TU      = -24.56
+VARIA: TA      =  73.90, GA      =  -6.45, A3B     =   0.01, RMSV    =  43.07
+VARIA: D1T     =   0.00, D1B     =   0.00, D1R     =   0.00, D1L     =   0.00
+VARIA: D2T     =   0.00, D2B     =   0.00, D2R     =   0.00, D2L     =   0.00
+ZEROS: A1      =-249.06, A2      =-176.01, A3      =-174.10, A4      =-180.14
+ZEROS: A5      =-263.62, A6      =-180.12, TM      =   0.00, GM      = -50.10
+ZEROS: CH      =   0.00, DAL     =   3.10, DAR     =  -1.68, DAV     =   0.00
+ZEROS: RMH     =   0.00, RMSH    =   0.00, RAH     =   0.00, RAV     =   0.00
+ZEROS: GL      =   4.09, GU      =   2.42, TL      =  -2.80, TU      =  -0.21
+ZEROS: TA      = -65.16, GA      = -46.35, A3B     =-199.69, RMSV    =   0.00
+ZEROS: D1T     =   0.00, D1B     =   0.00, D1R     =   0.00, D1L     =   0.00
+ZEROS: D2T     =   0.00, D2B     =   0.00, D2R     =   0.00, D2L     =   0.00
+PARAM: IF1H=  -0.939, IF1V=  -5.200, IF2H=   1.046, IF2V=   5.200
+PARAM: HELM=   0.000
+POLAN: DR HX 10 0 -0.35
+POLAN: OF F2
+POLAN: CO MN 4000000
+POLAN: ON F2
+POLAN: CO MN 4000000
+POLAN: DR HX 0 10 -0.35
+POLAN: OF F2
+POLAN: CO MN 4000000
+POLAN: ON F2
+POLAN: CO MN 4000000
+POLAN: DR HX 0 0 6
+POLAN: OF F2
+POLAN: CO MN 4000000
+POLAN: ON F2
+POLAN: CO MN 4000000
+PARAM: MN=4000000.00
+PARAM: TT=      1.48, RT=      1.68, TT2=      0.00, RT2=      0.00, MAG=      1.00
+FORMT: (I4,1X,I3,1X,F10.4,1X,F10.4,1X,F10.4,1X,F10.4,1X,2(1X,F9.0),1X,F9.2,1x,F9.0 ,2(1X,I3)   ,11(1X,F10.4))
+DATA_:
+ PNT PAL    QH         QK         QL         EN         M1        M2        TIME      CNTS      F1  F2    TT         A3B        A3         A4         KI         I1         I2         I3         I4         I8         I10    
+   1   1     3.4983     3.4963    -0.0032    39.9288  4000000.      111.   1022.85       69.     0   0     1.4801     0.0100   106.3500    45.7100     5.1340    -5.7650     5.8000    -0.0130    -0.3520    -0.0070     0.0000
+   1   2     3.4983     3.4963    -0.0032    39.9288  4000000.      106.   1023.22       53.     0   1     1.4802     0.0100   106.3500    45.7100     5.1340    -5.7650     5.7900    -0.0130    -0.3520     5.2040     2.7800
+   1   3     3.4983     3.4963    -0.0032    39.9288  4000000.      124.   1023.12       55.     0   0     1.4802     0.0100   106.3500    45.7100     5.1340    -3.3520    -3.3230     6.7130    -0.3520    -0.0070     0.0050
+   1   4     3.4983     3.4963    -0.0032    39.9288  4000000.      106.   1023.08       39.     0   1     1.4803     0.0100   106.3500    45.7100     5.1340    -3.3470    -3.3230     6.7040    -0.3520     5.2040     2.7800
+   1   5     3.4983     3.4963    -0.0032    39.9288  4000000.       98.   1023.44       63.     0   0     1.4790     0.0100   106.3500    45.7100     5.1340    -0.0080     0.0020    -0.0070     6.0170    -0.0070     0.0000
+   1   6     3.4983     3.4963    -0.0032    39.9288  4000000.      104.   1023.76       49.     0   1     1.4790     0.0100   106.3500    45.7100     5.1340    -0.0080     0.0020    -0.0070     6.0030     5.2040     2.7800

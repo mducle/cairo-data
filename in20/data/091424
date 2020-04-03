@@ -1,0 +1,77 @@
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+  091424      1      0
+ILL TAS data in the new ASCII format follow after the line VV...V
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	   80      0
+IN20  mechthild   08-May-15 11:22:56
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+INSTR: IN20
+EXPNO: 4-01-1428
+USER_: mechthild
+LOCAL: mechthild
+FILE_: 091424
+DATE_: 08-May-15 11:22:56
+TITLE: bi2fe4o9
+COMND:  SC A4   -44.22 DA4     0.15 MN      7000. NP  27
+POSQE: QH=  2.9982, QK=  2.6479, QL= -0.0025, EN=  -0.0002, UN=meV
+STEPS: A4      =  0.1500
+CURVE: MONO= auto, ANA= manu
+PARAM: DM=   3.43720, DA=   3.35500, SM=-1., SS= 1., SA=-1.
+PARAM: FX= 1., KFIX=   2.66150
+PARAM: ALF1= 600.00, ALF2= 600.00,ALF3= 600.00, ALF4= 600.00
+PARAM: BET1= 600.00, BET2= 600.00,BET3= 600.00, BET4= 600.00
+PARAM: ETAM=    16.0, ETAA=    16.0
+PARAM: AS=   3.13540, BS=   8.42968, CS=   6.00700
+PARAM: AA= 90.0000, BB= 90.0000,CC= 90.0000, ETAS=     1.0
+PARAM: AX=   1.000, AY=   0.000, AZ=   0.000
+PARAM: BX=   0.000, BY=   1.000, BZ=   0.000
+VARIA: I1      =  -0.01, I2      =  -0.01, I3      =  -0.01, I4      =  -0.01
+VARIA: I6      =   0.02, I8      =  -0.01, I9      =   0.00, I10     =   0.00
+VARIA: A1      = -20.09, A2      = -40.17, A3      =   0.01, A4      = -46.17
+VARIA: A5      =-175.90, A6      =   0.00, TM      =   5.42, GM      =   6.03
+VARIA: CH      =  45.00, DAL     =  10.00, DAR     =  10.09, DAV     = 111.21
+VARIA: RMH     =  62.39, RMSH    =  40.15, RAH     =  10.87, RAV     =   4.18
+VARIA: GL      =  -0.04, GU      =  -0.04, TL      = -26.32, TU      = -24.56
+VARIA: TA      =   6.81, GA      = -14.35, A3B     =   7.86, RMSV    =  43.07
+VARIA: D1T     =  15.28, D1B     =  11.97, D1R     =  10.50, D1L     =   2.86
+VARIA: D2T     =  21.86, D2B     =   7.73, D2R     =  10.22, D2L     =  10.32
+ZEROS: A1      =-249.08, A2      =-176.05, A3      =-173.96, A4      =-179.91
+ZEROS: A5      =-262.96, A6      =-179.20, TM      =   0.00, GM      = -50.10
+ZEROS: CH      =   0.00, DAL     =   3.10, DAR     =  -1.68, DAV     =   0.00
+ZEROS: RMH     =   0.00, RMSH    =   0.00, RAH     =   0.00, RAV     =   0.00
+ZEROS: GL      =   0.00, GU      =   0.00, TL      =  -2.80, TU      =  -0.21
+ZEROS: TA      = -65.16, GA      = -46.35, A3B     =-199.69, RMSV    =   0.00
+ZEROS: D1T     =   0.00, D1B     =   0.00, D1R     =   0.00, D1L     =   0.00
+ZEROS: D2T     =   0.00, D2B     =   0.00, D2R     =   0.00, D2L     =   0.00
+PARAM: MN=   7000.00
+PARAM: TT=      1.48, RT=      1.68, TT2=      0.00, RT2=      0.00, MAG=      1.00
+FORMT: (I4,1X,F10.4,1X,2(1X,F9.0),1X,F9.2,1x,F9.0 )
+DATA_:
+ PNT    A4         M1        M2        TIME      CNTS  
+   1   -46.1700     7000.        0.      0.95      108.
+   2   -46.0300     7000.        1.      0.95      106.
+   3   -45.8800     7000.        1.      0.95       93.
+   4   -45.7200     7000.        0.      0.95      102.
+   5   -45.5700     7000.        0.      0.95      100.
+   6   -45.4200     7000.        1.      0.94       94.
+   7   -45.2700     7000.        1.      0.94      130.
+   8   -45.1200     7000.        1.      0.95      125.
+   9   -44.9700     7000.        1.      0.95      154.
+  10   -44.8200     7000.        2.      0.96      200.
+  11   -44.6700     7000.        0.      0.95      245.
+  12   -44.5200     7000.        1.      0.95      309.
+  13   -44.3800     7000.        1.      0.94      374.
+  14   -44.2200     7000.        1.      0.93      396.
+  15   -44.0700     7000.        0.      0.94      471.
+  16   -43.9200     7000.        0.      0.94      577.
+  17   -43.7700     7000.        0.      0.93      581.
+  18   -43.6200     7000.        0.      0.93      634.
+  19   -43.4700     7000.        3.      0.95      615.
+  20   -43.3200     7000.        0.      0.96      573.
+  21   -43.1700     7000.        1.      0.95      528.
+  22   -43.0200     7000.        2.      0.96      477.
+  23   -42.8800     7000.        0.      0.94      390.
+  24   -42.7200     7000.        1.      0.94      326.
+  25   -42.5700     7000.        0.      0.95      257.
+  26   -42.4200     7000.        0.      0.95      193.
+  27   -42.2700     7000.        1.      0.95      155.
