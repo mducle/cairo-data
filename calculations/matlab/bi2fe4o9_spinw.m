@@ -1,4 +1,4 @@
-function [bfo, spec] = bi2fe4o9_spinw(Jvals)
+function [bfo, spec] = bi2fe4o9_spinw(Jvals, do_plot)
 
 bfo = spinw;
 
@@ -17,9 +17,15 @@ if nargin == 0
 Jvals = [1.3 3.0 2.6 3.6 13.5];
 end
 
+Jnames = {'Jd', 'Jc', 'J43', 'J43p', 'J33'};
+if numel(Jvals) > 5
+    for nn = 6:numel(Jvals)
+        Jnames{nn} = ['J' num2str(nn)];
+    end
+end
 for nn = 1:numel(Jvals)
-    bfo.addmatrix('label', ['J' num2str(nn)], 'value', Jvals(nn));
-    bfo.addcoupling('mat', ['J' num2str(nn)], 'bond', nn);
+    bfo.addmatrix('label', Jnames{nn}, 'value', Jvals(nn));
+    bfo.addcoupling('mat', Jnames{nn}, 'bond', nn);
 end
 
 bfo.addmatrix('label', 'K', 'value', diag([0 0 0.021]))
@@ -38,13 +44,20 @@ bfo.optmagsteep('nRun',50000)
 bfo.energy
 %bfo.magstr.S
 
-plot(bfo, 'range', [2 2 2]);
-%plot(bfo, 'range', [0.2 1.7; 0.2 1.7; 0 1]);
+if (nargin > 1) && do_plot
+    plot(bfo, 'range', [2 2 2]);
+    %plot(bfo, 'range', [0.2 1.7; 0.2 1.7; 0 1]);
+end
 
-q0 = [3 3 0];
-spec = bfo.spinwave({[-0.5 0 -0.5]+q0 [-0.5 0 0]+q0 [0 0 0]+q0 [0 -0.5 0]+q0 [-0.5 -0.5 0]+q0 [0 0 0]+q0 [-0.5 -0.5 0.5]+q0 [-0.5 -0.5 0]+q0 100},'hermit',false,'optmem',20);
-%figure; sw_plotspec(spec,'mode','disp','imag',true,'colormap',[0 0 0],'colorbar',false);
-spec = sw_neutron(spec);
-spech = sw_egrid(spec,'Evect',0:0.2:100.0); figure; sw_plotspec(spech,'mode','color','dE',1)
-%specl = sw_egrid(spec,'Evect',0:0.02:10.0); figure; sw_plotspec(specl,'mode','color','dE',1)
-title(sprintf('J_{44}=%4.2f J_c=%4.2f J_{43}=%4.2f J_{43}''=%4.2f J_{33}=%4.2f', Jvals));
+if nargout > 1
+    q0 = [3 3 0];
+    spec = bfo.spinwave({[-0.5 0 -0.5]+q0 [-0.5 0 0]+q0 [0 0 0]+q0 [0 -0.5 0]+q0 [-0.5 -0.5 0]+q0 [0 0 0]+q0 [-0.5 -0.5 0.5]+q0 [-0.5 -0.5 0]+q0 100},'hermit',false,'optmem',20);
+    %figure; sw_plotspec(spec,'mode','disp','imag',true,'colormap',[0 0 0],'colorbar',false);
+    spec = sw_neutron(spec);
+    spech = sw_egrid(spec,'Evect',0:0.2:100.0); 
+    if do_plot
+        figure; sw_plotspec(spech,'mode','color','dE',1)
+        %specl = sw_egrid(spec,'Evect',0:0.02:10.0); figure; sw_plotspec(specl,'mode','color','dE',1)
+        title(sprintf('J_{44}=%4.2f J_c=%4.2f J_{43}=%4.2f J_{43}''=%4.2f J_{33}=%4.2f', Jvals));
+    end
+end
