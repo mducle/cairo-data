@@ -1,9 +1,13 @@
 %% Some initial parameters
 
-force_recalculate = true;  % Recalculate spectra? (takes 2-3 days)
+force_recalculate = false; % Recalculate spectra? (takes 2-3 days)
 do_plot = true;            % Make Matlab plots?
 
 %% Sets paths
+
+if ~exist('spinw', 'file')
+    error('These scripts need SpinW installed. Please go to https://www.spinw.org and install it or use the "Add-Ons" menu');
+end
 
 if ~exist('bi2fe4o9_spinw', 'file') || ~exist('bi4fe5o13f_spinw', 'file')
     wd = fileparts(mfilename('fullpath'));
@@ -14,7 +18,7 @@ end
 % For Bi2Fe4O9
 if force_recalculate || ~exist('longpowspec.mat', 'file')
     [bfo, spec] = bi2fe4o9_spinw([0.8 1.0 3.5 7.5 19]);
-    bfopowspec = bfo.powspec(linspace(0,5,400),'Evect',0:0.2:100,'nRand',5000,'fibo',true,'hermit',false,'formfact',true);
+    bfopowspec = bfo.powspec(linspace(0,5,400),'Evect',0:0.2:100,'nRand',5000,'fibo',true,'hermit',false,'formfact',true,'optmem',50);
     save('longpowspec.mat', 'bfo', 'spec', 'bfopowspec')
 end
 

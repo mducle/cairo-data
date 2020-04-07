@@ -1,4 +1,4 @@
-function hf = plot_data(spec)
+function hf = plot_bfo_in20(spec)
 
 ym=30; % y-max
 cm=5;
