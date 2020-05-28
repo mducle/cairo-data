@@ -17,6 +17,17 @@ if nargin == 0
 Jvals = [1.3 3.0 2.6 3.6 13.5];
 end
 
+if nargin < 2
+    do_plot = false;
+end
+
+if numel(Jvals) < 6
+    Kz = 0.021;
+else
+    Kz = Jvals(6);
+    Jvals = Jvals(1:5);
+end
+
 Jnames = {'Jd', 'Jc', 'J43', 'J43p', 'J33'};
 if numel(Jvals) > 5
     for nn = 6:numel(Jvals)
@@ -28,7 +39,7 @@ for nn = 1:numel(Jvals)
     bfo.addcoupling('mat', Jnames{nn}, 'bond', nn);
 end
 
-bfo.addmatrix('label', 'K', 'value', diag([0 0 0.021]))
+bfo.addmatrix('label', 'K', 'value', diag([0 0 Kz]))
 bfo.addaniso('K');
 
 S1 = -[2.1 1.3 0]';

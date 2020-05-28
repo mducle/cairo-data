@@ -1,4 +1,8 @@
-function fitStr = fit_in20_spinw(Jvals, Jvary)
+function fitStr = fit_in20_spinw(Jvals, Jvary, do_plot)
+
+if nargin < 3
+    do_plot = false;
+end
 
 % Generate the text file for fitspec if it doesn't exist
 if ~exist('in20_fitted_modes.txt', 'file')
@@ -30,7 +34,7 @@ par_fit.func      = @(obj, p) matparser(obj, 'param', p, 'mat', {parnames{:} 'K(
 par_fit.xmin      = zeros(1, numel(J0) + 1);
 par_fit.xmax      = xmax;
 par_fit.x0        = [J0 0.02];
-par_fit.plot      = true;
+par_fit.plot      = do_plot;
 par_fit.hermit    = false;
 par_fit.optimizer = 'simplex';
 par_fit.maxiter   = 200;

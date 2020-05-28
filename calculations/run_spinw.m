@@ -17,13 +17,13 @@ end
 %% Does the long powder average SpinW calculations
 % For Bi2Fe4O9
 if force_recalculate || ~exist('longpowspec.mat', 'file')
-    [bfo, spec] = bi2fe4o9_spinw([0.8 1.0 3.5 7.5 19]);
+    [bfo, spec] = bi2fe4o9_spinw([-0.2185 1.3903 3.1506 6.5324 27.6299 0.0962]);
     bfopowspec = bfo.powspec(linspace(0,5,400),'Evect',0:0.2:100,'nRand',5000,'fibo',true,'hermit',false,'formfact',true,'optmem',50);
     save('longpowspec.mat', 'bfo', 'spec', 'bfopowspec')
 end
 
 % For Bi4Fe5O13F
-if force_recalculate || ~exist('longpowspec.mat', 'file')
+if force_recalculate || ~exist('bfof_fit_3sia_phase2.mat', 'file')
     [bfof, spec_bfof] = bi4fe5o13f_spinw([2.9984 0.4457 3.3665 9.9118 13.9041 0.1008 0.5664 -0.1647],2);
     bfofpowspec = bfof.powspec(linspace(0,5,100),'Evect',0:0.2:100,'nRand',5000,'fibo',true,'hermit',false,'formfact',true,'optmem',200);
     save('bfof_fit_3sia_phase2.mat', 'bfof', 'spec_bfof', 'bfofpowspec')
