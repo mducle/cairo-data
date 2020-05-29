@@ -80,7 +80,7 @@ for ax, sts in [[ax1p1, [ct1, lb1]], [ax1p2, [ct2, lb2]]]:
         ax.errorbar(ct, label=lb, marker='o', ls='-')
 ax1p1.set_ylim(0, 0.03)
 ax1p2.set_ylim(0, 0.005)
-plt.show()
+fig1.show()
 
 ###################################################################################
 
@@ -115,7 +115,7 @@ for ct in ct4:
 ax2r2[1].set_xlim(0, 0.005)
 ax2r2[1].set_ylim(-40, 80)
 
-plt.show()
+fig2.show()
 
 ###################################################################################
 
@@ -145,7 +145,7 @@ for ct in ct4:
 ax3r2[1].set_ylim(0, 0.005)
 ax3r2[1].set_xlim(-40, 100)
 
-plt.show()
+fig3.show()
 
 ###################################################################################
 
@@ -163,7 +163,7 @@ for id, tt in enumerate([2, 40, 65, 80]):
     ax.errorbar(ct3[-1], marker='.', ls='-', label='{}K'.format(tt))
 ax.set_ylim(0, 0.03)
 
-plt.show()
+fig4.show()
 
 ###################################################################################
 
@@ -195,7 +195,7 @@ ax3.pcolormesh(hkl, np.squeeze(spinw_calc['Evect']), spinw_calc['swConv'], vmin=
 ax3.set_xlim(0, 5)
 ax3.set_xlabel('$|Q| (\mathrm{\AA}^{-1})$')
 ax3.set_title('SpinW calc.')
-plt.show()
+fig5.show()
 
 ###################################################################################
 
@@ -235,7 +235,7 @@ ax2.set_ylim(0, 0.03)
 ax2.set_ylabel('Intensity (arb. unit)')
 ax2.legend(h1+h2, l1+l2, loc='upper right')
 
-plt.show()
+fig6.show()
 
 ###################################################################################
 
@@ -244,16 +244,17 @@ plt.show()
 #ax2 = fig6.add_axes([0.3, 0.55, 0.15, 0.3], projection='mslice')
 #fig6.tight_layout()
 
-fig7 = plt.figure()
-ax = fig7.add_subplot(111, projection='mslice')
 cts = []
-mrk = ['p', '*', 'x', '+']
 for id, tt in enumerate([2, 40, 65, 80]):
     cts.append(m.Cut(wsd['in4_{}K_Ei16'.format(tt)], 'DeltaE,-5,13,0.1', '|Q|,1,1.5,0') + 0.015*id)
-    ax.errorbar(cts[-1], marker=mrk[id], ls='', color=cc[id], label='{}K'.format(tt))
+
+fig7 = plt.figure()
+ax = fig7.add_subplot(111, projection='mslice')
+mrk = ['p', '*', 'x', '+']
+for id, ct in enumerate(cts):
+    ax.errorbar(ct, marker=mrk[id], ls='', color=cc[id], label='{}K'.format(tt))
 ax.set_xlim(-4, 12)
 ax.set_ylim(0, 0.08)
 ax.set_ylabel('Intensity (arb. unit)')
-
-plt.show()
+fig7.show()
 

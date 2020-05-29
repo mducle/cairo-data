@@ -59,10 +59,10 @@ for sl in sls:
 ax1.set_ylim(0, 120)
 ax1.set_xlim(0, 5)
 ax2.pcolormesh(m.Slice(wsd['map_5K'], '|Q|,0.5,5,0.075', 'DeltaE,0, 120, 1'), vmin=0, vmax=200, cmap=cmp)
-plt.show()
+fig1.show()
 
 spinw_calc = scipy.io.loadmat(parent_dir + '/calculations/bfo_powspec.mat')
-fig1, (ax1, ax2, ax3) = plt.subplots(ncols=3, subplot_kw={'projection': 'mslice'})
+fig2, (ax1, ax2, ax3) = plt.subplots(ncols=3, subplot_kw={'projection': 'mslice'})
 for sl in sls:
     ax1.pcolormesh(sl, vmin=0., vmax=200., cmap=cmp)
 ax1.set_ylim(0, 100)
@@ -79,7 +79,7 @@ ax3.pcolormesh(hkl, np.squeeze(spinw_calc['Evect']), spinw_calc['swConv'], vmin=
 ax3.set_xlim(0, 5)
 ax3.set_xlabel('$|Q| (\mathrm{\AA}^{-1})$')
 ax3.set_title('SpinW calc.')
-plt.show()
+fig2.show()
 
 ###################################################################################
 # Plots cut data and calculations
@@ -96,8 +96,8 @@ for ct, lab in zip(cts, labs):
 ax.set_ylim(bottom=0.0, top=500.0)
 ax.set_xlim(left=-20, right=130)
 ax.set_waterfall(True, x_offset=0.0, y_offset=50.0)
+fig.show()
 m.KeepFigure()
-m.Show()
 
 bkg_cuts = fit_bi2fe4o9_powder.get_backgrounds(wsd, cts)
 spinw_cuts = scipy.io.loadmat(parent_dir + '/calculations/bfo_powcut.mat')
@@ -119,7 +119,7 @@ ax.set_xlim(left=0, right=130)
 ax.set_xlabel('Energy Transfer (meV)')
 ax.set_ylabel('Intensity (arb. units)')
 ax.legend(loc='lower right')
-plt.show()
+fig.show()
 
 fig = mplt.figure()
 ax = fig.add_subplot(111, projection="mslice")
@@ -130,4 +130,6 @@ ax.errorbar(m.Cut(wsd['map_150K'], 'DeltaE,-10,120,1', '|Q|,0,3,3'), label='150K
 ax.errorbar(m.Cut(wsd['map_300K'], 'DeltaE,-10,120,1', '|Q|,0,3,3'), label='300K', marker='^', ls='-')
 ax.set_ylim(bottom=0.0, top=2.0)
 ax.set_xlim(left=-20, right=130)
-m.Show()
+fig.show()
+m.KeepFigure()
+
