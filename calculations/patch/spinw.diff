@@ -1,0 +1,58 @@
+diff --git a/swfiles/@spinw/powspec.m b/swfiles/@spinw/powspec.m
+index 6f6e9fd..7d9523d 100644
+--- a/swfiles/@spinw/powspec.m
++++ b/swfiles/@spinw/powspec.m
+@@ -284,6 +284,9 @@ end
+ % lambda value for SCGA, empty will make integration in first loop
+ specQ.lambda = [];
+ 
++if param.imagChk < 0
++    ioMax = 0;
++end
+ for ii = 1:nQ
+     if param.fibo
+         Q = QF*hklA(ii);
+@@ -321,6 +324,9 @@ for ii = 1:nQ
+     specQ = sw_egrid(specQ,struct('Evect',param.Evect,'T',param.T,'binType',param.binType,...
+     'imagChk',param.imagChk,'component',param.component),'noCheck');
+     powSpec(:,ii) = sum(specQ.swConv,2)/param.nRand;
++    if param.imagChk < 0
++        ioMax = ioMax + specQ.ioMax;
++    end
+     sw_timeit(ii/nQ*100,0,param.tid);
+ end
+ 
+@@ -355,6 +361,10 @@ switch funIdx
+         spectra.lambda   = specQ.lambda;
+ end
+ 
++if param.imagChk < 0
++    spectra.ioMax = ioMax;
++end
++
+ end
+ 
+ function [F,F1] = fibonacci(Fmax)
+diff --git a/swfiles/sw_egrid.m b/swfiles/sw_egrid.m
+index 797f57d..6f0ebf4 100644
+--- a/swfiles/sw_egrid.m
++++ b/swfiles/sw_egrid.m
+@@ -419,9 +419,15 @@ if isfield(spectra,'omega')
+         ioMax = max(abs(imag(omega{1}(:))));
+         
+         if ioMax > max(abs(dE(:)))
+-            error('egrid:BadSolution',['The imaginary part of the spin '...
+-                'wave energes is larger than the bin size! Improve '...
+-                'your calculation or disable imagChk option!']);
++            if param.imagChk < 0
++                spectra.ioMax = ioMax;
++            else
++                error('egrid:BadSolution',['The imaginary part of the spin '...
++                    'wave energes is larger than the bin size! Improve '...
++                    'your calculation or disable imagChk option!']);
++            end
++        else
++            spectra.ioMax = 0;
+         end
+     end
+     

@@ -1,0 +1,185 @@
+###########################################################################
+###									###
+### This Makefile.common is included by all other Makefiles and 	###
+### isolates all machine/compiler specific settings. Adapt it to your	###
+### environment or uncomment one of defines below			###
+###									###
+### Uncomment your C / C++ compiler and the compiler options		###
+###									###
+### CC= ...     must be defined for the C compiler			###
+### CCC= ...    must be defined for the C++ compiler			###
+### COPTS= ...  are the C compiler optimization options (e.g. -O2)	###
+### CCOPTS= ... are the C++ compiler optimization options (e.g. -O2)	###
+###									###
+### LIBL= ...   the lex/flex library (/usr/lib/libl.a or libfl.a)	###
+###									###
+###									###
+###########################################################################
+
+# Hint for compilation with several Linux PC distributions:
+# When linking it is sometimes not sufficient to use the flags -lX11 -lXpm 
+# only. The path -L /usr/X11R6 must be set explicitly.
+
+###########################################################################
+# gcc version egcs-2.95.2 19991024 (release) on a Linux system
+# Intel Pentium PC, use -m486 for 486 CPU or -mpentium for Pentium Systems
+###########################################################################
+
+# Checks to see if the gcc compiler is newer than 4.2
+ifneq ($(shell gcc --version|grep " 4.[2-9]"),)
+GCC42=1
+LFLAGS=-static-libgcc -static-libgfortran
+endif
+ifneq ($(shell gcc --version|grep " 5."),)
+GCC42=1
+GCC5=1
+# for windows  it turned out -static switch is necessary for linking
+#LFLAGS=-static -static-libgcc -static-libgfortran 
+endif
+
+ifdef icc
+CC=icc
+CCC=icpc
+FC=ifort
+LINKER=ifort -nofor-main
+LFLAGS=
+else
+CC=gcc
+CCC=g++
+FC=gfortran
+LINKER=gfortran
+endif
+
+# Checks whether we support the -march=native target
+ifdef fast
+ifdef icc
+ARCHFLAG=-O3 -xHOST -IPF_fma -long_double -IPF_fltacc#-ipo
+else
+ifdef GCC42
+ARCHFLAG=-O3 -march=native#-ftree-vectorizer-verbose=2
+#ARCHFLAG=-O2 -march=core2 -msse4 -msse4.1 -msse4.2 -mcx16 -msahf
+else
+ARCHFLAG=-O2
+endif
+endif
+endif
+
+# Checks for operating system types and architecture
+ifeq ($(shell uname),Linux)
+LINOPTS =-fPIC -rdynamic
+ifeq ($(shell uname -m),x86_64)
+ifdef OMP
+ARCHFLAG+=-fopenmp
+endif
+ifdef b32
+ARCHFLAG+=-m32
+LINKER += -m32
+endif
+endif
+else
+ifeq ($(shell uname),Darwin)
+LINOPTS = -fPIC -fpermissive
+LINKER=g++
+else
+LINOPTS =-D_WINDOWS
+endif
+endif
+
+# C compiler  ############################################################ 
+CC+= -pipe $(ARCHFLAG)
+#COPTS= -ansi -O3 -fomit-frame-pointer -fforce-addr -mcpu=i486
+#COPTS= -DDEBUG
+COPTS=-ansi $(LINOPTS)
+ifdef profile
+COPTS=-pg $(LINOPTS)
+LFLAGS=-pg 
+endif
+
+# C++ compiler ##########################################################
+CCC+= $(ARCHFLAG)
+#CCC=$(CC)
+#CCC= g++ 
+
+FC+= $(ARCHFLAG)
+
+# Check for cygwin
+ifneq (,$(findstring CYGWIN,$(shell uname)))
+ifneq ($(shell gcc --version|grep " 3."),)
+ARCHFLAG+=-mno-cygwin
+endif
+# To fix an error in spincf where min and max is used as variable names
+#   and conflicts with definitions in <w32api/windef.h>
+ARCHFLAG+=-DNOMINMAX
+# Checks to see if we want to use the 64bit crosscompiler in Cygwin
+ifdef cross64
+CC=x86_64-w64-mingw32-gcc -pipe $(ARCHFLAG)
+CCC=x86_64-w64-mingw32-g++ -pipe $(ARCHFLAG)
+FC=x86_64-w64-mingw32-gfortran -pipe $(ARCHFLAG)
+LINKER=x86_64-w64-mingw32-g++ -m64
+CYGFLAGS=
+endif
+ifdef cross32
+CC=i686-w64-mingw32-gcc -m32 -pipe $(ARCHFLAG)
+CCC=i686-w64-mingw32-g++ -m32 -pipe $(ARCHFLAG)
+FC=i686-w64-mingw32-gfortran -m32 -pipe $(ARCHFLAG)
+CYGFLAGS=
+LFLAGS+= -static-libgcc -static-libstdc++ -static-libgfortran
+endif
+endif
+
+#debug flag
+#DEBUG=debug
+
+#                       Optimizer or ANSI standard?
+ifdef DEBUG
+CCOPTS  =  -g  -fomit-frame-pointer -fforce-addr -DDEBUG -fpermissive $(LINOPTS)
+COPTS   =  -g  -fomit-frame-pointer -fforce-addr -DDEBUG $(LINOPTS)
+#CFLAGS  =       -c -g  -DDEBUG -Wall $(INCLDIRS)
+else
+ifdef profile 
+CCOPTS  = -pg -fforce-addr -fpermissive $(LINOPTS)
+COPTS   = -pg -fforce-addr $(LINOPTS)
+else
+CCOPTS  = -g -Wall  $(LINOPTS)
+COPTS   = -g -Wall  $(LINOPTS)
+endif
+endif
+
+ifeq ($(CC),icc)
+CCOPTS= -openmp -fPIC# -D "__sync_fetch_and_add(ptr,addend)=_InterlockedExchangeAdd(const_cast<void*>(reinterpret_cast<volatile void*>(ptr)), addend)"
+COPTS=$(CCOPTS)
+LFLAGS= -openmp -lstdc++
+endif
+
+ifdef gotoblas
+LFLAGS = -L../ic1ion_module/libs -larpack -L../ic1ion_module/libs/GotoBLAS -llapack -lgoto -L/usr/local/gfortran/lib -lgfortran -lpthread
+else
+ifdef MKLROOT
+LFLAGS+= -L../ic1ion_module/libs -larpack -fopenmp -m64 -I$(MKLROOT)/include -L$(MKLROOT)/lib/intel64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_core -lmkl_sequential -lpthread -lm
+CCOPTS+= -D_G77
+else
+LFLAGS+= -L../ic1ion_module/libs -larpack -llapack -lblas -L/usr/local/gfortran/lib -lgfortran
+#LFLAGS+= -llapack -lf77blas -latlas
+ifdef GCC5
+LFLAGS+= -lquadmath
+endif
+endif
+endif
+
+ifneq ($(shell uname),Darwin)
+LFLAGS+=-static-libgcc
+endif
+
+#CCOPTS= -O3 -fomit-frame-pointer -fforce-addr -mpentium
+#CCOPTS= -O0 -DDEBUG -Wall
+
+# for dec-unix
+#CCC= g++
+#CCOPTS= -O3 -fomit-frame-pointer -fforce-addr 
+
+###########################################################################
+#  LIBFLEX
+LIBL= /usr/lib/libfl.a
+
+
+CCOPTS+= -std=c++11
