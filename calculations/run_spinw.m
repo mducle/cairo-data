@@ -1,6 +1,7 @@
 %% Some initial parameters
 
 force_recalculate = false; % Recalculate spectra? (takes 2-3 days)
+calc_bfof_axial = false;   % Calculate for the axial SIA model for Bi4Fe5O13F
 do_plot = true;            % Make Matlab plots?
 
 %% Sets paths
@@ -24,15 +25,20 @@ if force_recalculate || ~exist('longpowspec.mat', 'file')
 end
 
 % For Bi4Fe5O13F
-if true%force_recalculate || ~exist('bfof_fit_3sia_phase2.mat', 'file')
-    %[bfof, spec_bfof] = bi4fe5o13f_spinw([2.9984 0.4457 3.3665 9.9118 13.9041 0.1008 0.5664 -0.1647],2);
+if force_recalculate || ~exist('bfof_fit_planar_phase2.mat', 'file')
     [bfof, spec_bfof] = bi4fe5o13f_spinw([-0.3104 0.4949 4.1644 6.3627 28.9272 0.0453 0.3246],2);
-    bfofpowspec = bfof.powspec(linspace(0,5,100),'Evect',0:0.2:100,'nRand',5000,'fibo',true,'hermit',false,'formfact',true,'optmem',200);
-    save('bfof_fit_3sia_phase2.mat', 'bfof', 'spec_bfof', 'bfofpowspec')
+    bfofpowspec = bfof.powspec(linspace(0,5,100),'Evect',0:0.2:100,'nRand',5000,'fibo',true,'hermit',false,'formfact',true,'optmem',50);
+    save('bfof_fit_planar_phase2.mat', 'bfof', 'spec_bfof', 'bfofpowspec')
+end
+
+if calc_bfof_axial && (force_recalculate || ~exist('bfof_fit_axial_phase2.mat', 'file'))
+    [bfof, spec_bfof] = bi4fe5o13f_spinw([2.9984 0.4457 3.3665 9.9118 13.9041 0.1008 0.5664 -0.1647],2);
+    bfofpowspec = bfof.powspec(linspace(0,5,100),'Evect',0:0.2:100,'nRand',5000,'fibo',true,'hermit',false,'formfact',true,'optmem',50);
+    save('bfof_fit_axial_phase2.mat', 'bfof', 'spec_bfof', 'bfofpowspec')
 end
 
 %% Generate data for Bi2Fe4O9 Python plots.
-clearvars -except do_plot
+clearvars -except do_plot calc_bfof_axial
 load('longpowspec.mat')
 powspec = sw_instrument(bfopowspec, 'dE', 11.5, 'dQ', 0.05, 'Ei', 300, 'ThetaMin', 3.5);
 swConv = powspec.swConv; hklA = powspec.hklA; Evect = powspec.Evect; 
@@ -80,55 +86,63 @@ if do_plot
 end
 
 %% Generate data for Bi4Fe5O13F Python plots
-clearvars -except do_plot
-load('bfof_fit_3sia_phase2.mat')
-eis = [166, 66, 16.6];
-des = [7.4 1.8 1.1];
-powspec = sw_instrument(bfofpowspec, 'dE', des(2), 'dQ', 0.01, 'Ei', 166.4, 'ThetaMin', 3.5);
-swConv = powspec.swConv; hklA = powspec.hklA; Evect = powspec.Evect; 
-save('bfof_powspec.mat', 'swConv', 'hklA', 'Evect');
-
-if do_plot
-    figure; sqw = sw_plotspec(powspec); caxis([0 0.5]); title('');
-end
-
-bfof_powcuts = {};
-
-sf = 0; 
-ofs = [0.025 0 0.05];
-lg = {};
-cc = 'rbk';
-bgp{1} = [1.4936 10.4833 117.9228 0.9180  20.6089 30.3615 31.972/(29.16/4) 0.66  47.3719 53.4852 27.6894/(29.16/4) 0.14];
-bgp{2} = [0.5974 2.4936*0.8 142.83 0.669  9.267 7.457 3.4521/(11.56/3.5) 0.24  20.056 14.648 10.9651/(11.56/3.5) 0.99  38.0319 22.9696 9.2782/(11.56/3.5) 0.612];
-bgp{3} = [0 0 0 0];
-iqm = [1 2 1]; iqx = [4 2.5 1.5];
-lg = {'MARI Ei=160 meV', 'MARI Ei=66 meV', 'IN4 $\lambda = 2.22\mathrm{\AA}$ (Ei=16 meV)'};
-for ii = 1:3
-    ispe = sw_instrument(bfofpowspec, 'dE', des(ii), 'dQ', 0.01, 'Ei', eis(ii), 'ThetaMin', 3.5);
-    iq0=max(find(ispe.hklA<=iqm(ii)));
-    iq1=max(find(ispe.hklA<=iqx(ii)));
-    sqw=ispe.swConv; sqw=sqw(:,iq0:iq1);
-    isqw=sqw; isqw(find(~isnan(sqw)))=1; isqw(find(isnan(sqw)))=0; sqw(find(isnan(sqw)))=0; 
-    xx = (ispe.Evect(2:end)+ispe.Evect(1:end-1))/2;
-    yy = sum(sqw')./sum(isqw')+(ii-1)*sf+ofs(ii);
-    bg = fvoigt(xx, bgp{ii})';
-    bfof_powcuts{ii} = {xx, yy, bg, lg{ii}};
-end
-save('bfof_powcut.mat', 'bfof_powcuts');
-if do_plot
-    figure; hold all;
-    load('bfof_cut_dat.mat');
-    mar160 = load('mar_ei160_cut'); errorbar(mar160.x, mar160.y*100, mar160.e*100, 'or');
-    mar66 = load('mar_ei66_cut'); errorbar(mar66.x, mar66.y*100, mar66.e*100, 'sb');
-    dt = cutinx(out2p22, 'x', 1, 1.5); errorbar(dt.x, dt.y*66, dt.e*66, '^k'); 
-    for ii = 1:3
-        xx = bfof_powcuts{ii}{1};
-        yy = bfof_powcuts{ii}{2};
-        bg = bfof_powcuts{ii}{3};
-        plot(xx, yy+bg, cc(ii))
-        plot(xx, bg, ['--' cc(ii)]);
-        plot(xx, yy, [':' cc(ii)]);
+do_calc = [1 calc_bfof_axial];
+fname = {'bfof_fit_planar_phase2.mat' 'bfof_fit_axial_phase2.mat'};
+savesuffix = {'' '_axial'};
+for zz = 1:2
+    clearvars -except do_plot zz fname do_calc savesuffix
+    if ~do_calc(zz)
+        continue;
     end
-    ylim([0 2]); xlim([0 100]);
-    box on; xlabel('Energy Transfer (meV)'); ylabel('Intensity (arb. units)');
+    load(fname{zz})
+    eis = [166, 66, 16.6];
+    des = [7.4 1.8 1.1];
+    powspec = sw_instrument(bfofpowspec, 'dE', des(2), 'dQ', 0.01, 'Ei', 166.4, 'ThetaMin', 3.5);
+    swConv = powspec.swConv; hklA = powspec.hklA; Evect = powspec.Evect; 
+    save(sprintf('bfof_powspec%s.mat', savesuffix{zz}), 'swConv', 'hklA', 'Evect');
+    
+    if do_plot
+        figure; sqw = sw_plotspec(powspec); caxis([0 0.5]); title('');
+    end
+    
+    bfof_powcuts = {};
+    
+    sf = 0; 
+    ofs = [0.025 0 0.05];
+    lg = {};
+    cc = 'rbk';
+    bgp{1} = [1.4936 10.4833 117.9228 0.9180  20.6089 30.3615 31.972/(29.16/4) 0.66  47.3719 53.4852 27.6894/(29.16/4) 0.14];
+    bgp{2} = [0.5974 2.4936*0.8 142.83 0.669  9.267 7.457 3.4521/(11.56/3.5) 0.24  20.056 14.648 10.9651/(11.56/3.5) 0.99  38.0319 22.9696 9.2782/(11.56/3.5) 0.612];
+    bgp{3} = [0 0 0 0];
+    iqm = [1 2 1]; iqx = [4 2.5 1.5];
+    lg = {'MARI Ei=160 meV', 'MARI Ei=66 meV', 'IN4 $\lambda = 2.22\mathrm{\AA}$ (Ei=16 meV)'};
+    for ii = 1:3
+        ispe = sw_instrument(bfofpowspec, 'dE', des(ii), 'dQ', 0.01, 'Ei', eis(ii), 'ThetaMin', 3.5);
+        iq0=max(find(ispe.hklA<=iqm(ii)));
+        iq1=max(find(ispe.hklA<=iqx(ii)));
+        sqw=ispe.swConv; sqw=sqw(:,iq0:iq1);
+        isqw=sqw; isqw(find(~isnan(sqw)))=1; isqw(find(isnan(sqw)))=0; sqw(find(isnan(sqw)))=0; 
+        xx = (ispe.Evect(2:end)+ispe.Evect(1:end-1))/2;
+        yy = sum(sqw')./sum(isqw')+(ii-1)*sf+ofs(ii);
+        bg = fvoigt(xx, bgp{ii})';
+        bfof_powcuts{ii} = {xx, yy, bg, lg{ii}};
+    end
+    save(sprintf('bfof_powcut%s.mat', savesuffix{zz}), 'bfof_powcuts');
+    if do_plot
+        figure; hold all;
+        load('bfof_cut_dat.mat');
+        mar160 = load('mar_ei160_cut'); errorbar(mar160.x, mar160.y*100, mar160.e*100, 'or');
+        mar66 = load('mar_ei66_cut'); errorbar(mar66.x, mar66.y*100, mar66.e*100, 'sb');
+        dt = cutinx(out2p22, 'x', 1, 1.5); errorbar(dt.x, dt.y*66, dt.e*66, '^k'); 
+        for ii = 1:3
+            xx = bfof_powcuts{ii}{1};
+            yy = bfof_powcuts{ii}{2};
+            bg = bfof_powcuts{ii}{3};
+            plot(xx, yy+bg, cc(ii))
+            plot(xx, bg, ['--' cc(ii)]);
+            plot(xx, yy, [':' cc(ii)]);
+        end
+        ylim([0 2]); xlim([0 100]);
+        box on; xlabel('Energy Transfer (meV)'); ylabel('Intensity (arb. units)');
+    end
 end
