@@ -35,25 +35,25 @@ bfof.addmatrix('value',Jd,'label','Jd','color','k');           bfof.addcoupling(
 if numel(J)==6
     bfof.addmatrix('value',diag([0 0 J(6)]),'label','D');      bfof.addaniso('D');
 elseif numel(J)==7
-    bfof.addmatrix('value',diag([0 0 J(6)]),'label','D1');     bfof.addaniso('D1', [1 2]);
-    bfof.addmatrix('value',diag([0 0 J(7)]),'label','D2');     bfof.addaniso('D2', [3]);
+     bfof.addmatrix('value',diag([0 0 J(6)]),'label','D1');     bfof.addaniso('D1', 1);
+     bfof.addmatrix('value',diag([0 0 J(6)]),'label','D2');     bfof.addaniso('D2', 2);
+     bfof.addmatrix('value',diag([0 0 J(7)]),'label','D3');     bfof.addaniso('D3', 3);
 elseif numel(J)==8
-    bfof.addmatrix('value',diag([J(8) 0 J(6)]),'label','D1');  bfof.addaniso('D1', [1 2]);
-    bfof.addmatrix('value',diag([J(8) 0 J(7)]),'label','D2');  bfof.addaniso('D2', [3]);
+    M0 = diag([0 0 J(8)]);
+    bfof.addmatrix('value',aniso_mat(110, 0)+M0,'label','D1a'); bfof.addaniso('D1a', [1], [1 2 5 6]);
+    bfof.addmatrix('value',aniso_mat(160, 0)+M0,'label','D1b'); bfof.addaniso('D1b', [1], [3 4 7 8]);
+    bfof.addmatrix('value',aniso_mat(135, J(6))+M0,'label','D2a');   bfof.addaniso('D2a', [2], [1 2 3 4]);
+    bfof.addmatrix('value',aniso_mat(45, J(6))+M0,'label','D2b');   bfof.addaniso('D2b', [2], [5 6 7 8]);
+    bfof.addmatrix('value',aniso_mat(0, J(7))+M0,'label','D3a');   bfof.addaniso('D3a', [3], [1 3]);
+    bfof.addmatrix('value',aniso_mat(0, J(7))+M0,'label','D3b');  bfof.addaniso('D3b', [3], [2 4]);
 else
     bfof.addmatrix('value',diag([0 0 0.2]),'label','D');       bfof.addaniso('D');
 end
 
-S2a = -[4.05 -0.35 0];
-S2b = -[-0.35 4.05 0];
-S1a = [2.18 -2.53 0];
-S1b = [2.53 2.18 0];
-S = [S1b; S1a; S1a; S1b; S1b; S1a; S1a; S1b; S2a; -S2a; -S2b; S2b; S2b; -S2b; S2a; -S2a; -S1b; -S1a; -S1b; -S1a];
-Sv=[S; -S; -S; S];
-
-bfof.genmagstr('mode','direct','S',Sv','nExt',[2 2 1]);
-plot(bfof, 'range', [0 0 0.4; 2 2 0.6]');
-
+bfof.genmagstr('mode', 'direct', 'S', ones(3,80), 'nExt', [2 2 1]);
+out = bfof.optmagstr('func', @bfof_structure, 'xmin', [0 0 0 0], 'xmax', [2*pi 2*pi 2*pi 2*pi], 'x0', [pi pi pi pi]);
+bfof = out.obj;
+bfof.cache.angs = [out.x([1 1 2])-out.x([4 2 3])]*180/pi;
 out = optmagsteep(bfof,'nRun',1000);
 bfof = out.obj;
 
@@ -62,7 +62,18 @@ if calc
     spec = bfof.spinwave({[-0.5 0 -0.5]+q0 [-0.5 0 0]+q0 [0 0 0]+q0 [0 -0.5 0]+q0 [-0.5 -0.5 0]+q0 [0 0 0]+q0 [-0.5 -0.5 0.5]+q0 [-0.5 -0.5 0]+q0 100},'hermit',false,'optmem',20);
     spec = sw_neutron(spec);
     try
+        plot(bfof, 'range', [0 0 0.4; 2 2 0.6]');
         spech = sw_egrid(spec,'Evect',0:0.2:100.0); figure; sw_plotspec(spech,'mode','color','dE',1)
         title(sprintf('J_{c1}=%4.2f J_{c2}=%4.2f J_{ab1}=%4.2f J_{ab2}=%4.2f J_{d}=%4.2f', J));
     end
+end
+
+end
+
+function M = aniso_mat(angle, val)
+    angle = angle * pi / 180;
+    ealpha = [cos(angle) sin(angle) 0];
+    M =  val*[ealpha(1)^2           ealpha(1)*ealpha(2)   ealpha(1)*ealpha(3);
+              ealpha(2)*ealpha(1)   ealpha(2)^2           ealpha(2)*ealpha(3);
+              ealpha(3)*ealpha(2)   ealpha(3)*ealpha(2)   ealpha(3)^2];
 end
