@@ -5,6 +5,10 @@ function [chi2,bfopowspec] = bfof_iter(pars, doplt, save_file_name)
 %
 % x0 = [1.3 3.7 2.9 6.3 24.0 0.1 0.5 -0.1];  % Parameters in Beauvois, Simonet et al.
 % x_opt = fminsearch(@bfof_iter, x0)
+%
+% After optimisation has finished use:
+% [err, cor] = bfof_iter(pars, 'covariance')
+% To calculate the covariance matrix
 
 if nargin < 3
     save_file_name = 'fit_par_tmp.mat';
@@ -29,6 +33,16 @@ dt = cutinx(out2p22, 'x', 1, 1.5);
 xd = {{mar160.x(1:150), mar160.y(1:150)*100, mar160.e(1:150)*100} ...               % MARI Ei=160meV data
       {mar66.x(1:120), mar66.y(1:120)*100, mar66.e(1:120)*100} ...                  % MARI Ei=66meV
       {dt.x(420:522), dt.y(420:522)*143/1.7/1.27/3, dt.e(420:522)*143/1.7/1.27}};
+
+calc_cov = false;
+if strcmp(doplt, 'covariance')
+    calc_cov = true;
+    doplt = 0;
+    resid = [];
+    npt = 0;
+    ypar = [];
+    edat = [];
+end
 
 if nargin < 2
     doplt = 0;
@@ -104,6 +118,12 @@ for ii = 1:3
     end
     y1 = interp1(xx, yy + bg, xd{ii}{1}, 'linear', 0);
     vchi2(ii) = (sum((xd{ii}{2} - y1).^2 ./ xd{ii}{3}.^2) / numel(y1)) * (1 + bfopowspec{ii}.ioMax);
+    if calc_cov
+        resid = [resid(:); ((xd{ii}{2}(:) - y1(:)) ./ xd{ii}{3}(:))];
+        ypar = [ypar; y1(:)];
+        edat = [edat; xd{ii}{3}(:)];
+        npt = npt + numel(y1);
+    end
 end
 
 if doplt
@@ -139,3 +159,45 @@ else
     xvec = [disp_struct];
 end
 save(save_file_name, 'xvec');
+
+if calc_cov
+    npar = numel(pars);
+    % Calculates the Jacobian matrix, with a fractional step size of 1%
+    jac = zeros(npt, npar);
+    fdp = 1e-2;
+    for jj = 1:numel(pars)
+        dpar = pars;
+        del = fdp * pars(jj);
+        dpar(jj) = dpar(jj) + del;
+        bfo = bi4fe5o13f_spinw(dpar, 2);
+        ycalc = [];
+        for ii = 1:3
+            bfopowspec{ii} = bfo.powspec(linspace(iqm(ii),iqx(ii),nsp(ii)), 'Evect',0:0.2:100, 'nRand', nr(ii), ...
+                                     'fibo',true, 'hermit',false, 'formfact',true, 'optmem',0, 'imagChk', -1);
+            ispe = sw_instrument(bfopowspec{ii}, 'dE', des(ii), 'dQ', 0.1, 'Ei', eis(ii), 'ThetaMin', 3.5);
+            iq0=max(find(ispe.hklA<=iqm(ii)));
+            iq1=max(find(ispe.hklA<=iqx(ii)));
+            sqw=ispe.swConv*ifs(ii); sqw=sqw(:,iq0:iq1);
+            isqw=sqw; isqw(find(~isnan(sqw)))=1; isqw(find(isnan(sqw)))=0; sqw(find(isnan(sqw)))=0; 
+            xx = (ispe.Evect(2:end)+ispe.Evect(1:end-1))/2;
+            yy = ( sum(sqw')./sum(isqw') );
+            % Simulations only down to zero meV, for negative energies need to extend x-axis for background
+            xn = -20:0.01:0; xx = [xn xx]; yy = [xn*0+ofs(ii) yy];
+            bg = fvoigt(xx, bgp{ii})' + ofs(ii);
+            ycalc = [ycalc; interp1(xx(:), yy(:) + bg(:), xd{ii}{1}(:), 'linear', 0)];
+        end
+        jac(:, jj) = (ycalc - ypar) / del;
+        jac(:, jj) = jac(:, jj) ./ edat;     % Want the reduced Jacobian.
+    end
+    chisqr_red = (resid' * resid) / (npt - npar);
+    % Calculate the pseudoinverse of jac'*jac using a SVD
+    [jac, s, v] = svd(jac, 0);
+    s = repmat((1 ./ diag(s))', [npar 1]);
+    v = v .* s;
+    covar = chisqr_red * (v * v');
+    err = sqrt(diag(covar));
+    nn = repmat(1 ./ err, [1 npar]);
+    cor = nn .* covar .* nn';
+    chi2 = err;
+    bfopowspec = cor;
+end

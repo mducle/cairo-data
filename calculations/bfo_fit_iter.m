@@ -6,7 +6,7 @@ function chi2 = bfo_fit_iter(Jpars, do_plot, save_file_name)
 % To run a fit, use:
 %
 % x0 = [1.3 3.7 2.9 6.3 24.0];  % Parameters in Beauvois, Simonet et al.
-% save('fit_par_tmp.mat', x0);
+% save('fit_par_tmp.mat', 'x0');
 % x_opt = fminsearch(@bfo_fit_iter, x0([1 5]))
 %
 % Where we only use fminsearch to fit the J44 and J33 parameters which determine the high
