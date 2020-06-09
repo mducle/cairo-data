@@ -78,7 +78,7 @@ maxstamf=1e-06
 bigstep=1.9
 # sum_{i=1}^{n} abs(actual change of angular momentum <Ji> with respect to                   
 # initial  configuration) > maxspinchange will  end selfconsistency process
-maxspinchange=10
+maxspinchange=50
 
 [OUTPUT OF PHYSICAL PROPERTIES]
 #output of physical properties to compare with experiment

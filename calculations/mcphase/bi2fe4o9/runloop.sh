@@ -15,6 +15,7 @@ for ff in ini tst j; do cp mcphas.${ff}-0 mcphas.${ff}; done
 mcphasit -v >& results/mcphasit.out
 mv results results-pc-$1-110
 mkdir results
+cp mcphas.ini-001 mcphas.ini
 mcphasit -v >& results/mcphasit.out
 mv results results-pc-$1-001
 cp results-pc-$1-110/mcphas.fum ../bfo_110_mcphas.fum
