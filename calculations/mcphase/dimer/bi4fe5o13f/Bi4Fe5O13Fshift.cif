@@ -1,0 +1,57 @@
+#======================================================================
+
+# CRYSTAL DATA
+
+#----------------------------------------------------------------------
+
+data_VESTA_phase_1
+
+
+_chemical_name_common                  'bi4fe5o13f'
+_cell_length_a                         8.29950
+_cell_length_b                         8.29950
+_cell_length_c                         18.05730
+_cell_angle_alpha                      90
+_cell_angle_beta                       90
+_cell_angle_gamma                      90
+_space_group_name_H-M_alt              'P 42/m b c'
+_space_group_IT_number                 135
+
+loop_
+_space_group_symop_operation_xyz
+   'x, y, z'
+   '-x+1/2, -y+1/2, -z'
+   '-x+1/2, -y+1/2, z'
+   'x, y, -z'
+   '-y+1/2, x, z+1/2'
+   'y, -x+1/2, -z+1/2'
+   'y, -x+1/2, z+1/2'
+   '-y+1/2, x, -z+1/2'
+   '-x, y+1/2, -z'
+   'x+1/2, -y, z'
+   'x+1/2, -y, -z'
+   '-x, y+1/2, z'
+   'y+1/2, x+1/2, -z+1/2'
+   '-y, -x, z+1/2'
+   '-y, -x, -z+1/2'
+   'y+1/2, x+1/2, z+1/2'
+
+loop_
+   _atom_site_label
+   _atom_site_occupancy
+   _atom_site_fract_x
+   _atom_site_fract_y
+   _atom_site_fract_z
+   _atom_site_adp_type
+   _atom_site_B_iso_or_equiv
+   _atom_site_type_symbol
+   Bi         1.0     0.420600      0.409200      0.156970     Biso  1.000000 Bi3+
+   Fe1        1.0     0.250000      0.750000      0.080000     Biso  1.000000 Fe3+
+   Fe2        1.0     0.601500      0.588800      0.000000     Biso  1.000000 Fe3+
+   Fe3        1.0     0.250000      0.750000      0.250000     Biso  1.000000 Fe3+
+   O1         1.0     0.750000      0.750000      0.000000     Biso  1.000000 O2-
+   O2         1.0     0.041400      0.626000      0.585800     Biso  1.000000 O2-
+   O3         1.0     0.886200      0.340000      0.000000     Biso  1.000000 O2-
+   O4         1.0     0.076800      0.576800      0.750000     Biso  1.000000 O2-
+   O5         1.0     0.332300      0.610300      0.333100     Biso  1.000000 O2-
+   F          1.0     0.750000      0.750000      0.250000     Biso  1.000000 F-

@@ -1,0 +1,179 @@
+# this file is the input file created by program cif2mcphas 
+#<!--mcdiff.mcdiff.in>
+#***************************************************************
+#      mcdiff is a program for the calculation of elastic
+#   neutron diffraction and resonant magnetic Xray scattering
+#  reference: M. Rotter and A. Boothroyd PRB 79 (2009) 140405R
+#***************************************************************
+# this input file contains 4 sections corresponding to different
+# groups of parameters
+#
+# - all lines have to start with a # sign with the  exception of
+#   the lines containing atomic positional parameters
+# - the other parameters have to be defined in the corresponding
+#   section by statements such as parameter=value
+# - the sequence of the parameters within a section is arbitrary
+#
+#
+# %SECTION 1%  OVERALL PARAMETERS
+#
+#! lambda   = 2.4  wavelength (A)
+#
+#! thetamax = 60   maximum bragg angle (deg)
+#
+#! ovalltemp= 0  overall temperature factor (A^2)
+#           ...I ~ EXP(-2 * ovalltemp * sintheta^2 / lambda^2)
+#                  relation to other notations:
+#                  ovalltemp = Biso = 8 pi^2 Uiso^2
+#
+#! lorentz=0  type of lorentzfactor to be used
+#            0.....no lorentzfactor
+#            1.....neutron powder flat sample
+#            2.....neutron powder cylindrical sample
+#            3.....neutron single crystal
+#            4.....neutron TOF powder cyl. sample - d-pattern log scaled
+#            5.....neutron TOF powder cyl. sample - d-pattern normal scaled
+#
+#! out10=1    type of desired output in column 10 and 11 of mcdiff.out
+#! out11=0    (optional) default is NSF in column 10 and LF in column 11
+#            0....LF
+#            1....|NSF|[b]
+#            2....Re(NSF)[b]
+#            3....Im(NSF)[b]
+#            4....|MSF|
+#            5....|MSF.P|
+#            6....Re(MSF.P)
+#            7....Im(MSF.P)
+#            8....|MSFdip|
+#            9....|MSFdip.P|
+#            10....Re(MSFdip.P)
+#            11....Im(MSFdip.P)
+#            12....angl(Q,P)[°]
+#            13....i(MSFxMSF*).P
+#            14....I+
+#            15....I-
+#            16....I+/I-
+#            17....i(MSFxMSF*)dip.P
+#            18....Idip+
+#            19....Idip-
+#            20....Idip+/Idip-
+#            21....2*|MSF.P|/sin^2(angl(Q,P)
+#            22....2*|MSFdip.P|/sin^2(angl(Q,P)
+#            23....2|NSF|sqrt(4PI/3.65)(|g|-sqrt(g^2-1/sin(angl(Q,P))))_with_g=(1+I+/I-)/(1-I+/I-)
+#            24....2|NSF|sqrt(4PI/3.65)(|g|+sqrt(g^2-1/sin(angl(Q,P))))_with_g=(1+I+/I-)/(1-I+/I-)
+#            25....2|NSF|sqrt(4PI/3.65)(|g|-sqrt(g^2-1/sin(angl(Q,P))))_with_g=(1+Idip+/Idip-)/(1-Idip+/Idip-)
+#            26....2|NSF|sqrt(4PI/3.65)(|g|+sqrt(g^2-1/sin(angl(Q,P))))_with_g=(1+Idip+/Idip-)/(1-Idip+/Idip-)
+#
+#
+#           In the above the intensities I+ and I- are the intensities in a polarised neutron scattering experiment
+#           with incoming polarisation parallel (I+) and antiparallel (I-) to P:
+#            I+-=LF exp(-OTF Q^2/8pi^2)
+#                    [ |NSF/NB|^2 + 3.65/4pi (|MSF|^2-i(MSF x MSF*).P)/NB^2
+#                        +-  sqrt(3.65/4pi)/NB^2 (NSF (MSF*.P) + NSF* (MSF.P))]
+#
+#
+#             For some of the above options we need the
+#! Pa=  0.0000   Components of Polarisation Vector in terms of lattice vectors P=(Pa * a + Pb * b + Pc *c)
+#! Pb=  0.0000   Note: the length of P, i.e. |P| indicates the degree of beam polarisation (|P|<=1)
+#! Pc=  1.0000
+#
+#
+#
+#
+# %SECTION 2% LIST OF NONMAGNETIC ATOMS IN CRYSTALLOGRAPHIC UNIT CELL
+#
+#
+#! natcryst=72      number of nonmagnetic atoms in primitive crystalographic unit cell
+#
+# it follows a list of nat lines with nonmagnetic atoms
+# ... notes: - if an occupancy other than 1.0 is needed, just reduce
+#              the scattering length linear accordingly
+#            - da db and dc are not used by the program, dr1,dr2 and dr3
+#              refer to the primitive lattice given below
+#            - Debye Waller Factor notation: sqr(Intensity) ~ structure factor ~
+#              ~sum_n ()n exp(-2 DWFn sin^2(theta) / lambda^2)=EXP (-Wn),
+#              relation to other notations: 2*DWF = B = 8 pi^2 <u^2>, units DWF (A^2)
+#
+#! use_dadbdc=1
+#
+# Real Imag[scattering length(10^-12cm)]   da(a)    db(b)    dc(c)    dr1(r1)  dr2(r2)  dr3(r3)  DWF(A^2)
+   0.85320   0.00000   0.42060   0.40920   0.15697   3.49077   3.39616   2.83445 0  # Bi_1.sipf
+   0.85320   0.00000   0.07940   0.09080   0.84303   0.65898   0.75359  15.22285 0  # Bi_2.sipf
+   0.85320   0.00000   0.07940   0.09080   0.15697   0.65898   0.75359   2.83445 0  # Bi_3.sipf
+   0.85320   0.00000   0.42060   0.40920   0.84303   3.49077   3.39616  15.22285 0  # Bi_4.sipf
+   0.85320   0.00000   0.09080   0.42060   0.65697   0.75359   3.49077  11.86310 0  # Bi_5.sipf
+   0.85320   0.00000   0.40920   0.07940   0.34303   3.39616   0.65898   6.19420 0  # Bi_6.sipf
+   0.85320   0.00000   0.40920   0.07940   0.65697   3.39616   0.65898  11.86310 0  # Bi_7.sipf
+   0.85320   0.00000   0.09080   0.42060   0.34303   0.75359   3.49077   6.19420 0  # Bi_8.sipf
+   0.85320   0.00000   0.57940   0.90920   0.84303   4.80873   7.54591  15.22285 0  # Bi_9.sipf
+   0.85320   0.00000   0.92060   0.59080   0.15697   7.64052   4.90334   2.83445 0  # Bi_10.sipf
+   0.85320   0.00000   0.92060   0.59080   0.84303   7.64052   4.90334  15.22285 0  # Bi_11.sipf
+   0.85320   0.00000   0.57940   0.90920   0.15697   4.80873   7.54591   2.83445 0  # Bi_12.sipf
+   0.85320   0.00000   0.90920   0.92060   0.34303   7.54591   7.64052   6.19420 0  # Bi_13.sipf
+   0.85320   0.00000   0.59080   0.57940   0.65697   4.90334   4.80873  11.86310 0  # Bi_14.sipf
+   0.85320   0.00000   0.59080   0.57940   0.34303   4.90334   4.80873   6.19420 0  # Bi_15.sipf
+   0.85320   0.00000   0.90920   0.92060   0.65697   7.54591   7.64052  11.86310 0  # Bi_16.sipf
+   0.58030   0.00000   0.75000   0.75000   0.00000   6.22462   6.22462   0.00000 0  # O1_1.sipf
+   0.58030   0.00000   0.75000   0.75000   0.50000   6.22462   6.22462   9.02865 0  # O1_2.sipf
+   0.58030   0.00000   0.25000   0.25000   0.00000   2.07487   2.07488   0.00000 0  # O1_3.sipf
+   0.58030   0.00000   0.25000   0.25000   0.50000   2.07487   2.07487   9.02865 0  # O1_4.sipf
+   0.58030   0.00000   0.04140   0.62600   0.58580   0.34360   5.19549  10.57797 0  # O2_1.sipf
+   0.58030   0.00000   0.45860   0.87400   0.41420   3.80615   7.25376   7.47933 0  # O2_2.sipf
+   0.58030   0.00000   0.45860   0.87400   0.58580   3.80615   7.25376  10.57797 0  # O2_3.sipf
+   0.58030   0.00000   0.04140   0.62600   0.41420   0.34360   5.19549   7.47933 0  # O2_4.sipf
+   0.58030   0.00000   0.87400   0.04140   0.08580   7.25376   0.34360   1.54932 0  # O2_5.sipf
+   0.58030   0.00000   0.62600   0.45860   0.91420   5.19549   3.80615  16.50798 0  # O2_6.sipf
+   0.58030   0.00000   0.62600   0.45860   0.08580   5.19549   3.80615   1.54932 0  # O2_7.sipf
+   0.58030   0.00000   0.87400   0.04140   0.91420   7.25376   0.34360  16.50798 0  # O2_8.sipf
+   0.58030   0.00000   0.95860   0.12600   0.41420   7.95590   1.04574   7.47933 0  # O2_9.sipf
+   0.58030   0.00000   0.54140   0.37400   0.58580   4.49335   3.10401  10.57797 0  # O2_10.sipf
+   0.58030   0.00000   0.54140   0.37400   0.41420   4.49335   3.10401   7.47933 0  # O2_11.sipf
+   0.58030   0.00000   0.95860   0.12600   0.58580   7.95590   1.04574  10.57797 0  # O2_12.sipf
+   0.58030   0.00000   0.12600   0.54140   0.91420   1.04574   4.49335  16.50798 0  # O2_13.sipf
+   0.58030   0.00000   0.37400   0.95860   0.08580   3.10401   7.95590   1.54932 0  # O2_14.sipf
+   0.58030   0.00000   0.37400   0.95860   0.91420   3.10401   7.95590  16.50798 0  # O2_15.sipf
+   0.58030   0.00000   0.12600   0.54140   0.08580   1.04574   4.49335   1.54932 0  # O2_16.sipf
+   0.58030   0.00000   0.88620   0.34000   0.00000   7.35502   2.82183   0.00000 0  # O3_1.sipf
+   0.58030   0.00000   0.61380   0.16000   0.00000   5.09423   1.32792   0.00000 0  # O3_2.sipf
+   0.58030   0.00000   0.16000   0.88620   0.50000   1.32792   7.35502   9.02865 0  # O3_3.sipf
+   0.58030   0.00000   0.34000   0.61380   0.50000   2.82183   5.09423   9.02865 0  # O3_4.sipf
+   0.58030   0.00000   0.11380   0.84000   0.00000   0.94448   6.97158   0.00000 0  # O3_5.sipf
+   0.58030   0.00000   0.38620   0.66000   0.00000   3.20527   5.47767   0.00000 0  # O3_6.sipf
+   0.58030   0.00000   0.84000   0.38620   0.50000   6.97158   3.20527   9.02865 0  # O3_7.sipf
+   0.58030   0.00000   0.66000   0.11380   0.50000   5.47767   0.94448   9.02865 0  # O3_8.sipf
+   0.58030   0.00000   0.07680   0.57680   0.75000   0.63740   4.78715  13.54298 0  # O4_1.sipf
+   0.58030   0.00000   0.42320   0.92320   0.25000   3.51235   7.66210   4.51433 0  # O4_2.sipf
+   0.58030   0.00000   0.42320   0.92320   0.75000   3.51235   7.66210  13.54298 0  # O4_3.sipf
+   0.58030   0.00000   0.07680   0.57680   0.25000   0.63740   4.78715   4.51433 0  # O4_4.sipf
+   0.58030   0.00000   0.92320   0.07680   0.25000   7.66210   0.63740   4.51433 0  # O4_5.sipf
+   0.58030   0.00000   0.57680   0.42320   0.75000   4.78715   3.51235  13.54298 0  # O4_6.sipf
+   0.58030   0.00000   0.57680   0.42320   0.25000   4.78715   3.51235   4.51433 0  # O4_7.sipf
+   0.58030   0.00000   0.92320   0.07680   0.75000   7.66210   0.63740  13.54298 0  # O4_8.sipf
+   0.58030   0.00000   0.33230   0.61030   0.33310   2.75792   5.06518   6.01489 0  # O5_1.sipf
+   0.58030   0.00000   0.16770   0.88970   0.66690   1.39183   7.38407  12.04241 0  # O5_2.sipf
+   0.58030   0.00000   0.16770   0.88970   0.33310   1.39183   7.38407   6.01489 0  # O5_3.sipf
+   0.58030   0.00000   0.33230   0.61030   0.66690   2.75792   5.06518  12.04241 0  # O5_4.sipf
+   0.58030   0.00000   0.88970   0.33230   0.83310   7.38407   2.75792  15.04354 0  # O5_5.sipf
+   0.58030   0.00000   0.61030   0.16770   0.16690   5.06518   1.39183   3.01376 0  # O5_6.sipf
+   0.58030   0.00000   0.61030   0.16770   0.83310   5.06518   1.39183  15.04354 0  # O5_7.sipf
+   0.58030   0.00000   0.88970   0.33230   0.16690   7.38407   2.75792   3.01376 0  # O5_8.sipf
+   0.58030   0.00000   0.66770   0.11030   0.66690   5.54158   0.91543  12.04241 0  # O5_9.sipf
+   0.58030   0.00000   0.83230   0.38970   0.33310   6.90767   3.23432   6.01489 0  # O5_10.sipf
+   0.58030   0.00000   0.83230   0.38970   0.66690   6.90767   3.23432  12.04241 0  # O5_11.sipf
+   0.58030   0.00000   0.66770   0.11030   0.33310   5.54158   0.91543   6.01489 0  # O5_12.sipf
+   0.58030   0.00000   0.11030   0.83230   0.16690   0.91543   6.90767   3.01376 0  # O5_13.sipf
+   0.58030   0.00000   0.38970   0.66770   0.83310   3.23432   5.54158  15.04354 0  # O5_14.sipf
+   0.58030   0.00000   0.38970   0.66770   0.16690   3.23432   5.54158   3.01376 0  # O5_15.sipf
+   0.58030   0.00000   0.11030   0.83230   0.83310   0.91543   6.90767  15.04354 0  # O5_16.sipf
+   0.56540   0.00000   0.75000   0.75000   0.25000   6.22462   6.22462   4.51433 0  # F_1.sipf
+   0.56540   0.00000   0.75000   0.75000   0.75000   6.22462   6.22462  13.54298 0  # F_2.sipf
+   0.56540   0.00000   0.25000   0.25000   0.75000   2.07487   2.07487  13.54298 0  # F_3.sipf
+   0.56540   0.00000   0.25000   0.25000   0.25000   2.07487   2.07487   4.51433 0  # F_4.sipf
+#
+#
+# %SECTION 3% DESCRIPTION OF THE LATTICE
+#
+#
+# Note: what follows here may directly be taken from the output of program spins
+#       (file spins.out) or charges (file charges.out)
+# -----------------------------------------------------------------------------

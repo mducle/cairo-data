@@ -1,0 +1,26 @@
+#<!--mcphase.mcphas.j-->
+#***************************************************************
+# Lattice and Exchange Parameter file for
+# mcphas version 5.3
+# - program to calculate static magnetic properties
+# reference: M. Rotter JMMM 272-276 (2004) 481
+# mcdisp version 5.3
+# - program to calculate the dispersion of magnetic excitations
+# reference: M. Rotter et al. J. Appl. Phys. A74 (2002) 5751
+#***************************************************************
+#
+# Lattice Constants (A)
+#! a=8.2995 b=8.2995 c=18.0573 alpha=  90 beta=  90 gamma=  90
+#! r1a=   2 r2a=   0 r3a=   0
+#! r1b=   0 r2b=   2 r3b=   0   primitive lattice vectors [a][b][c]
+#! r1c=   0 r2c=   0 r3c=   2
+#! nofatoms=2  nofcomponents=6  number of atoms in primitive unit cell/number of components of each spin
+#*********************************************************************
+#! da=-0.1485 [a] db=-0.1612 [b] dc=   0 [c] nofneighbours=1 diagonalexchange=1 sipffilename=Fe2_1.sipf
+#da[a]   db[b]     dc[c]       Jaa[meV]  Jbb[meV]  Jcc[meV]  Jab[meV]  Jba[meV]  Jac[meV]  Jca[meV]  Jbc[meV]  Jcb[meV]
++0.297   +0.3224  +0        -2.900000e+01 +0.000000e+00 -2.900000e+01 +0.000000e+00 -2.900000e+01 +0.000000e+00 
+#*********************************************************************
+#! da=0.1485 [a] db=0.1612 [b] dc=   0 [c] nofneighbours=1 diagonalexchange=1 sipffilename=Fe2_2.sipf
+#da[a]   db[b]     dc[c]       Jaa[meV]  Jbb[meV]  Jcc[meV]  Jab[meV]  Jba[meV]  Jac[meV]  Jca[meV]  Jbc[meV]  Jcb[meV]
+-0.297   -0.3224  +0        -2.900000e+01 +0.000000e+00 -2.900000e+01 +0.000000e+00 -2.900000e+01 +0.000000e+00 
+#*********************************************************************
