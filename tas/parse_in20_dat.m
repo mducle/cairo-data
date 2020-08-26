@@ -21,7 +21,7 @@ else
 end
 
 % Loads IN20 data (first run is 91198, last run undetermined)
-[x, y, mn, setindex] = flexmerge(91198:99999, 'data', 3e5);
+[x, y, mn, setindex] = flexmerge(91198:99999, 'in20_data', 3e5);
 
 % Only keep energy scans
 id_en = cellfun(@(x)strcmp(x, 'EN'), setindex{1});
