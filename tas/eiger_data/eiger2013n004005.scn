@@ -1,0 +1,63 @@
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+    4005       1       0
+#ILL TAS data in the new ASCII format follow after the line VV...V
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+      42       0
+EIGER     Sandor Toth 06-Dec-2013 11:38:52
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+INSTR: EIGER
+EXPNO: 
+USER_: Sandor Toth
+LOCAL: Uwe Stuhr
+FILE_: 4005
+DATE_: 06-Dec-2013 11:38:52
+TITLE: Critical magnetic correlation in Rb2CrCl4
+COMND: sc qh 1 1 0 0 dqh 0.001 -0.001 0 0 np 201 mn 4e4
+#POSQE: QH=  0.9000, QK=  1.0998, QL=  0.0000, EN= -0.0009, UN=MEV
+STEPS: DQH=  0.0010, DQK= -0.0010, DQL=  0.0000, DEN=  0.0000, 
+PARAM: DM=  3.3540, DA=  3.3540, SM= 1, SS=-1, SA= 1
+PARAM: FX=  1, KFIX=  2.6620
+PARAM: ALF1=  0.0000, ALF2=  0.0000, ALF3=  0.0000, ALF4=  0.0000
+PARAM: BET1=  0.0000, BET2=  0.0000, BET3=  0.0000, BET4=  0.0000
+PARAM: ETAM=  0.0000, ETAA=  0.0000
+PARAM: AS=  5.1000, BS=  5.1000, CS= 15.7700
+PARAM: AA= 90.0000, BB= 90.0000, CC= 90.0000
+PARAM: UB11=  0.1949, UB12=  0.0215, UB13=  0.0000
+PARAM: UB21=  0.0215, UB22= -0.1949, UB23= -0.0000
+PARAM: UB31=  0.0000, UB32=  0.0000, UB33= -0.0634
+PARAM: PN1=  0.0000, PN2=  0.0000, PN3=  1.0000
+PARAM: AX=  0.0000, AY=  2.0000, AZ=  0.0000
+PARAM: BX=  2.0000, BY=  0.0000, BZ=  0.0000
+#VARIA: MCH     =  0.0000, MCV     =  2.8757, A1      = 20.6015, 
+#VARIA: MT      =  7.7259, MG      = -0.0993, A2ROT   = 41.2039, 
+VARIA: D1L     =-69.9975, D1R     =-73.9999, D2L     =-54.2955, 
+VARIA: D2R     =-38.7025, VSL     = -0.2000, VSR     = -0.2000, 
+VARIA: A4      =-38.3975, A3      = 25.2150, SGL     = -0.3001, 
+#VARIA: SGU     = -0.5000, A6      = 41.2025, A5      = 20.6018, 
+VARIA: ATL     =  0.0049, ATU     =  1.0010, AG      = -0.0020, 
+VARIA: ACH     =  0.0000, 
+ZEROS: MCH     = -0.0000, MCV     = -0.0000, A1      =  0.2250, 
+ZEROS: MT      = -0.3999, MG      = -0.0000, A2ROT   =  0.0911, 
+ZEROS: D1L     = -0.0000, D1R     = -0.0000, D2L     =  1.6985, 
+ZEROS: D2R     = -1.7000, VSL     = -0.0000, VSR     = -0.0000, 
+ZEROS: A4      = -0.1900, A3      = -0.0000, SGL     = -0.0000, 
+#ZEROS: SGU     = -0.0000, A6      = -0.0900, A5      = 90.2536, 
+ZEROS: ATL     = -0.0000, ATU     = -0.0000, AG      = -0.0000, 
+ZEROS: ACH     = -0.0000, 
+PARAM: MN=40000.000000
+PARAM: TT= 52.1996, RT=  0.0000
+FORMT: (I4,1X,F9.4,1X,F9.4,1X,F9.4,1X,F9.4,1X,F8.0,1X,F8.0,1X,F9.2,1X,F8.0,1X,F8.0,1X,F9.4,1X,F9.4,1X,F9.4)
+DATA_:
+# PNT     QH        QK        QL        EN          M1       M2      TIME     CNTS       M3     TT        A3        A4    
+   1    0.9000    1.1000    0.0000   -0.0009    40000     3441     11.98        9        0   52.2003   25.2150  -38.4025 
+   2    0.9011    1.0991    0.0000   -0.0009    40000     3367     11.94       13        0   52.1998   25.1575  -38.4025 
+   3    0.9021    1.0982    0.0000   -0.0009    40000     3389     11.94       12        1   52.2122   25.1050  -38.4025 
+   4    0.9030    1.0969    0.0000   -0.0009    40000     3458     12.02       11        0   52.2004   25.0500  -38.3900 
+   5    0.9041    1.0961    0.0000   -0.0009    40000     3431     12.02       11        0   52.2000   24.9950  -38.3900 
+   6    0.9051    1.0952    0.0000   -0.0009    40000     3415     12.01        7        1   52.1994   24.9400  -38.3900 
+   7    0.9060    1.0939    0.0000   -0.0009    40000     3527     12.11       11        0   52.2000   24.8850  -38.3775 
+   8    0.9071    1.0930    0.0000   -0.0009    40000     3448     12.03        4        0   52.2003   24.8300  -38.3775 
+   9    0.9081    1.0922    0.0000   -0.0009    40000     3391     12.51       11        0   52.1991   24.7750  -38.3800 
+  10    0.9091    1.0910    0.0000   -0.0009    40000     3412     12.00        7        0   52.1996   24.7200  -38.3700 
+  11    0.9101    1.0901    0.0000   -0.0009    40000     3412     12.00        8        0   52.2005   24.6650  -38.3675 
+  12    0.9111    1.0892    0.0000   -0.0009    40000     3390     11.82       13        0   52.1986   24.6100  -38.3675 
