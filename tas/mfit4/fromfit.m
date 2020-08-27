@@ -1,4 +1,4 @@
-function [x,y,err,selected,fit,p,dp,fixed]=fromfit(mode)
+function [x,y,err,selected,fit,p,dp,fixed]=fromfit(modestr)
 % MFIT data collect
 % function [x,y,err,selected,fit,p,dp,fixed]=fromfit;
 % 		Get data from MFIT
@@ -9,19 +9,19 @@ function [x,y,err,selected,fit,p,dp,fixed]=fromfit(mode)
 curfig = get(0,'CurrentFigure');
 [hmf_ctrl, hmf_data, hmf_pars]=mf_figs;
 
-if ~exist('mode') | isempty(mode)
-	mode = 'normal';
+if ~exist('modestr') | isempty(modestr)
+	modestr = 'normal';
 end
 
 %---------- Attach data to userdata ------------------
 x=[];y=[];err=[];p=[];dp=[];fit=[];selected=[];fixed=[];
 
-if (isempty(hmf_ctrl) | ~hmf_ctrl) & strcmp(mode,'normal')
+if (isempty(hmf_ctrl) | ~hmf_ctrl) & strcmp(modestr,'normal')
 	disp('MFit is not running.')
 	return
 end
 
-if strcmp(mode,'normal')
+if strcmp(modestr,'normal')
 	disp('Collect data from MFIT windows');
 end
 if ~isempty(hmf_data) & hmf_data
@@ -33,7 +33,7 @@ if ~isempty(hmf_data) & hmf_data
 		selected=userdata(:,4);
 	end
 end
-if isempty(x) & strcmp(mode,'normal')
+if isempty(x) & strcmp(modestr,'normal')
 	disp('No user data');
 end
 
@@ -47,7 +47,7 @@ if ~isempty(hfit)
 		xfit = xfit{1};
 	end
 	fit=reshape(mf_interp(xfit,yfit,x),size(x));
-elseif strcmp(mode,'normal')
+elseif strcmp(modestr,'normal')
 	disp('No fit data');
 end
 
@@ -65,7 +65,7 @@ if ~isempty(hmf_pars) & hmf_pars
 		h=hm(i,3);
 		fixed = [ fixed get(h,'Value') ];
 	end
-elseif strcmp(mode,'normal')
+elseif strcmp(modestr,'normal')
 	disp('No pars data');
 end
 

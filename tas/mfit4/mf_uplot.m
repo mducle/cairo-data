@@ -151,7 +151,7 @@ if update(1) & ~isempty(xi)
 %---------Plot the error bars ------------------
 
    vis='on';
-   if herr
+   if ~isempty(herr)
       vis=get(herr,'visible');
    end	
    h=findobj('Tag','mf_ebarsonoff');

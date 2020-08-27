@@ -17,3 +17,7 @@ if isempty(hmf_data) hmf_data = 0; end
 
 hmf_pars = findobj(0,'Tag',ParsName); 
 if isempty(hmf_pars) hmf_pars = 0; end
+
+if ~isnumeric(hmf_ctrl); hmf_ctrl = hmf_ctrl.Number; end
+if ~isnumeric(hmf_data); hmf_data = hmf_data.Number; end
+if ~isnumeric(hmf_pars); hmf_pars = hmf_pars.Number; end
