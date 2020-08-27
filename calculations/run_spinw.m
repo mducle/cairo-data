@@ -20,8 +20,9 @@ end
 if force_recalculate || ~exist('longpowspec.mat', 'file')
     %[bfo, spec] = bi2fe4o9_spinw([0.8 1.0 3.5 7.5 19]);
     [bfo, spec] = bi2fe4o9_spinw([-0.2185 1.3903 3.1506 6.5324 27.6299 0.0962]);
+    q0 = [3 3 0]; eigspec = bfo.spinwave({[-1 -1 1.5]+q0 [-1.5 -1.5 1.5]+q0 [-1.5 -1.5 2]+q0 100},'hermit',false,'optmem',20);
     bfopowspec = bfo.powspec(linspace(0,5,400),'Evect',0:0.2:100,'nRand',5000,'fibo',true,'hermit',false,'formfact',true,'optmem',50);
-    save('longpowspec.mat', 'bfo', 'spec', 'bfopowspec')
+    save('longpowspec.mat', 'bfo', 'spec', 'bfopowspec', 'eigspec')
 end
 
 % For Bi4Fe5O13F
