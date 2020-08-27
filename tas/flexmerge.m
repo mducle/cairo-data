@@ -319,7 +319,9 @@ if nargout<1
       disp(sprintf('%-12s%-20s%-16s%-16s',s_independent_var{iset},countstr,mnstr,'M2/MN*1e5'));
       for ix = 1:length(x{iset})
      %   disp([num2str(x{iset}(ix)) sprintf('\t\t') num2str(y{iset}(ix)) sprintf('\t\t') num2str(mn{iset}(ix)) sprintf('\t\t') num2str(round(m2{iset}(ix)./norm_mn.*1e5))]);
+         try
          disp(sprintf('%-16s%-16s%-16s%-16s',num2str(x{iset}(ix)),num2str(y{iset}(ix)),num2str(mn{iset}(ix)),num2str(round(m2{iset}(ix)./norm_mn.*1e5))));
+         end
       end
    end
    x = [];

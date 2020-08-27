@@ -8,11 +8,12 @@ end
 if ~exist('mfit', 'file')
     wd = fileparts(mfilename('fullpath'));
     addpath([wd '/mfit4']);
+    addpath([wd '/nllsq']);
 end
 
 % Load a previous fit if this exist.
-if exist('fits.mat', 'file')
-    load('fits.mat');
+if exist('fits_in20.mat', 'file')
+    load('fits_in20.mat');
     s0 = setindex;
     f0 = fits;
 else
@@ -49,8 +50,9 @@ for ii = 1:length(x)
 end
 
 % Plots the energy scans. If right click, will push data to mfit
-figure;
+hf = figure;
 for ii = 1:length(x)
+    set(0, 'CurrentFigure', hf);
     clf; hold all;
     title(sprintf('%d - %s', ii, setindex{3}{ii}));
     errorbar(x{ii}, y{ii}.*3e5./mn{ii}, sqrt(y{ii}).*3e5./mn{ii}, 'o');
@@ -61,6 +63,7 @@ for ii = 1:length(x)
     else
         fitit = 0;
     end
+    waitforbuttonpress;
     [mx, my, mb] = ginput(1); 
     if(mb==3 || fitit)
         tomfit(x{ii}, y{ii}.*3e5./mn{ii}, sqrt(y{ii}).*3e5./mn{ii}); 
@@ -72,4 +75,4 @@ for ii = 1:length(x)
     end
 end
 
-%save('fits.mat', 'setindex', 'fits');
+%save('fits_in20.mat', 'setindex', 'fits');
