@@ -123,14 +123,22 @@ set(gca,'XTick',[0 0.5232 0.9206 1.293 1.691 2.236 2.991]); % (h-0.5,k-0.5,0)
 set(gca,'XTickLabel',[]);
 
 ffo=ym/50; ofs = -3.8*ffo; oft = ofs-7*ffo; 
-text(0     ,ofs,'$(h-\frac{1}{2},k,-\frac{1}{2})$', 'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
-text(0.5232,oft,'$(h-\frac{1}{2},k,0)$',            'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
-text(0.9206,ofs,'$(h,k,0)$',                        'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
-text(1.293 ,oft,'$(h,k-\frac{1}{2},0)$',            'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
-text(1.691 ,ofs,'$(h-\frac{1}{2},k-\frac{1}{2},0)$','HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
-text(2.236 ,oft,'$(h,k,0)$',                        'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
-text(2.991 ,ofs,'$(h-\frac{1}{2},k-\frac{1}{2},-\frac{1}{2})$','HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
-text(3.514 ,oft,'$(h-\frac{1}{2},k-\frac{1}{2},0)$','HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(0     ,ofs,'$(h-\frac{1}{2},k,-\frac{1}{2})$', 'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(0.5232,oft,'$(h-\frac{1}{2},k,0)$',            'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(0.9206,ofs,'$(h,k,0)$',                        'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(1.293 ,oft,'$(h,k-\frac{1}{2},0)$',            'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(1.691 ,ofs,'$(h-\frac{1}{2},k-\frac{1}{2},0)$','HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(2.236 ,oft,'$(h,k,0)$',                        'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(2.991 ,ofs,'$(h-\frac{1}{2},k-\frac{1}{2},-\frac{1}{2})$','HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(3.514 ,oft,'$(h-\frac{1}{2},k-\frac{1}{2},0)$','HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(0     ,ofs,'$(\frac{5}{2},3,-\frac{1}{2})$',    'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(0.5232,oft,'$(\frac{5}{2},3,0)$',               'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(0.9206,ofs,'$(3,3,0)$',                         'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(1.293 ,oft,'$(3,\frac{5}{2},0)$',               'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(1.691 ,ofs,'$(\frac{5}{2},\frac{5}{2},0)$',     'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(2.236 ,oft,'$(3,3,0)$',                         'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(2.991 ,ofs,'$(\frac{5}{2},\frac{5}{2},-\frac{1}{2})$','HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(3.514 ,oft,'$(\frac{5}{2},\frac{5}{2},0)$',     'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
 
 ylb=ylabel('Energy Transfer (meV)','FontSize',18); yps=get(ylb,'Position'); set(ylb,'Position',[yps(1) ym yps(3)]); 
 set(gca,'FontSize',14);
@@ -154,7 +162,7 @@ end
 legend('off'); colorbar off; title(''); ylabel(''); xlabel('');
 set(gca,'XTickLabel',[]); set(gca,'YTickLabel',[]);
 plot([1 1]*0.5421, get(gca,'YLim'),'-k');
-ylim([0 ym]);
+xlim([0 1.067]); ylim([0 ym]);
 
 % Plots Eiger data on right panel
 s4 = subplot(224);
@@ -168,9 +176,12 @@ xlim([0.98 2.02]); ylim([0 30]); box on;
 plot([1 1]*1.5, get(gca,'YLim'),'-k');
 set(gca, 'XTick', [1 1.5 2]);
 set(gca,'XTickLabel',[]); set(gca,'YTickLabel',[]);
-text(1     ,ofs,'$(h-1,k-1,\frac{3}{2})$',                     'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
-text(1.5   ,oft,'$(h-\frac{3}{2},k-\frac{3}{2},\frac{3}{2})$', 'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
-text(2.0   ,ofs,'$(h-\frac{3}{2},k-\frac{3}{2},2)$',           'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(1     ,ofs,'$(h-1,k-1,\frac{3}{2})$',                     'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(1.5   ,oft,'$(h-\frac{3}{2},k-\frac{3}{2},\frac{3}{2})$', 'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+%text(2.0   ,ofs,'$(h-\frac{3}{2},k-\frac{3}{2},2)$',           'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(1     ,ofs,'$(2,2,\frac{3}{2})$',                     'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(1.5   ,oft,'$(\frac{3}{2},\frac{3}{2},\frac{3}{2})$', 'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
+text(2.0   ,ofs,'$(\frac{3}{2},\frac{3}{2},2)$',           'HorizontalAlignment','Center','interpreter', 'latex','FontSize',12);
 
 % Rearranges the panels so that the IN20 data covers 3/4 of the space
 s1p = get(s1, 'Position');
