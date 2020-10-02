@@ -82,6 +82,10 @@ set(gca,'XTickLabel',[]);
 set(gca,'FontSize',14);
 box on
 
+% Polarised neutron data points
+lpa = {[2.5 3 0 4 21] [2.5 2.5 0 15] [2.5 2.5 -0.5 4]};
+lpax = []; lpaid = [];
+
 % Plots the data below
 s2 = subplot(223); hold all;
 ma = 0;
@@ -103,6 +107,11 @@ for ist=1:length(in20dat.s{3})
         if(ma<max(ysb{ist})); ma=max(ysb{ist}); end
       end
      end
+     % Plots polarised data points
+     hkld = cellfun(@(hkle)sum(abs(hkl-hkle(1:3)')), lpa);
+     if min(hkld) < 1e-2
+        lpax = [lpax iu]; lpaid = [lpaid find(hkld==min(hkld))];
+     end
    end
   end
 end
@@ -111,6 +120,14 @@ if(logplot==1)
 else
     caxis([1 ma*cfm]);
 end
+
+for idd = 1:numel(lpax)
+  plot(lpax(idd), lpa{lpaid(idd)}(4), 'ro', 'MarkerSize', 15, 'LineWidth', 2)
+  if numel(lpa{lpaid(idd)}) > 4
+    plot(lpax(idd), lpa{lpaid(idd)}(5), 'ro', 'MarkerSize', 15, 'LineWidth', 2)
+  end
+end
+
 
 xlim([0 3.514]); ylim([0 ym]);%box on;        % (h-0.5,k,-0.5)
 plot([1 1]*0.5232,get(gca,'YLim'),'-k');      % (h-0.5,k,0)

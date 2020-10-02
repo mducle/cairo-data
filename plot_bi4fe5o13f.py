@@ -182,6 +182,7 @@ for sl in sls_in4:
 ax1.set_xlim(0, 5)
 ax1.set_ylim(0, 100)
 ax1.set_title('IN4 Data')
+ax1.annotate('1.5 K', (0.5, 90))
 
 for sl in sls_mar:
     ax2.pcolormesh(sl, vmin=0., vmax=0.007, cmap=cmp)
@@ -189,12 +190,15 @@ ax2.set_xlim(0, 5)
 ax2.set_ylim(0, 100)
 ax2.set_ylabel('')
 ax2.set_title('MARI Data')
+ax2.annotate('5 K', (0.5, 90))
 hkl = [op(spinw_calc['hklA']) for op in [np.min, np.max, lambda x: np.mean(np.diff(x))/2., np.shape]]
 hkl = np.linspace(hkl[0]-hkl[2], hkl[1]+hkl[2], hkl[3][1]+1)
 ax3.pcolormesh(hkl, np.squeeze(spinw_calc['Evect']), spinw_calc['swConv'], vmin=0, vmax=0.3, cmap=cmp)
 ax3.set_xlim(0, 5)
 ax3.set_xlabel('$|Q| (\mathrm{\AA}^{-1})$')
 ax3.set_title('SpinW calc.')
+ax3.annotate('5 K', (0.5, 90))
+fig5.savefig('Figure_6.png', dpi=600)
 fig5.show()
 
 ###################################################################################
@@ -207,33 +211,34 @@ ax2 = fig6.add_axes([0.45, 0.5, 0.42, 0.35], projection='mslice')
 
 ax1.errorbar(m.Cut(wsd['mar_5K_Ei160_scaled'], 'DeltaE,-40,120,1', '|Q|,1,4,0'), label='MARI Ei=160 meV', marker='o', ls='')
 ax1.errorbar(m.Cut(wsd['mar_5K_Ei66_scaled'], 'DeltaE,-15,60,0.5', '|Q|,2,2.5,0'), label='MARI Ei=66 meV', marker='s', ls='')
-ax2.errorbar(m.Cut(wsd['in4_2K_Ei16'], 'DeltaE,-5,13,0.1', '|Q|,1,1.5,0'), label='IN4 $\lambda=2.2 \mathrm{\AA}$', marker='^', ls='', color=cc[2])
+ax2.errorbar(m.Cut(wsd['in4_2K_Ei16'], 'DeltaE,-5,13,0.1', '|Q|,1,1.5,0'), label='IN4 Ei=16.6 meV', marker='^', ls='', color=cc[2])
 h1, l1 = ax1.get_legend_handles_labels()
 h2, l2 = ax2.get_legend_handles_labels()
 
 spinw_cuts = scipy.io.loadmat(parent_dir + '/calculations/bfof_powcut.mat')
 axs = [ax1, ax1, ax2]
-scale_fac = [2. / 100, 1. / 100, 2. / 66]
-bkg0 = [0.0 / 100., 0., 0.005 / 66.]
+scale_fac = [2. / 100, 1. / 100, 2. / 100]
 for (ii, sw_cut) in enumerate(spinw_cuts['bfof_powcuts'][0,:]):
     xx = sw_cut[0,0].T
     yy = (sw_cut[0,1]*scale_fac[ii]).T
     bkg = (sw_cut[0,2]*scale_fac[ii]).T
     #print(bkg[np.where(~np.isnan(bkg))])
     bkg[np.where(np.isnan(bkg))] = 0
-    axs[ii].plot(xx, yy + bkg + bkg0[ii], ls='-', color=cc[ii])
-    #axs[ii].plot(xx, yy + bkg0[ii], ls='--', color=cc[ii])
-    #axs[ii].plot(xx, bkg + bkg0[ii], ls=':', color=cc[ii])
+    axs[ii].plot(xx, yy + bkg, ls='-', color=cc[ii])
+    #axs[ii].plot(xx, yy, ls='--', color=cc[ii])
+    #axs[ii].plot(xx, bkg, ls=':', color=cc[ii])
 
 ax1.legend().remove()
 ax2.legend().remove()
 ax1.set_xlim(0, 100)
 ax1.set_ylim(0, 0.01)
 ax1.set_ylabel('Intensity (arb. unit)')
+ax1.annotate('Bi$_4$Fe$_5$O$_{13}$F - 5 K', (3, 0.0005))
 ax2.set_xlim(0, 12)
 ax2.set_ylim(0, 0.03)
 ax2.set_ylabel('Intensity (arb. unit)')
 ax2.legend(h1+h2, l1+l2, loc='upper right')
+ax2.annotate('1.5 K', (0.5, 0.027))
 
 fig6.show()
 
@@ -245,14 +250,15 @@ fig6.show()
 #fig6.tight_layout()
 
 cts = []
-for id, tt in enumerate([2, 40, 65, 80]):
+tts = [2, 40, 65, 80]
+for id, tt in enumerate(tts):
     cts.append(m.Cut(wsd['in4_{}K_Ei16'.format(tt)], 'DeltaE,-5,13,0.1', '|Q|,1,1.5,0') + 0.015*id)
 
 fig7 = plt.figure()
 ax = fig7.add_subplot(111, projection='mslice')
 mrk = ['p', '*', 'x', '+']
-for id, ct in enumerate(cts):
-    ax.errorbar(ct, marker=mrk[id], ls='', color=cc[id], label='{}K'.format(tt))
+for id in [3, 2, 1, 0]:
+    ax.errorbar(cts[id], marker=mrk[id], ls='', color=cc[id], label='{}K'.format(tts[id]))
 ax.set_xlim(-4, 12)
 ax.set_ylim(0, 0.08)
 ax.set_ylabel('Intensity (arb. unit)')
